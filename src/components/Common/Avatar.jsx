@@ -1,4 +1,4 @@
-import { getDiceBearUrl, isEmojiAvatar, PRESET_AVATARS } from '../../data/avatars';
+import { getDiceBearUrl, isEmojiAvatar, PRESET_AVATARS, CUSTOM_AVATARS } from '../../data/avatars';
 import { getInitials, stringToColor } from '../../utils/helpers';
 
 const Avatar = ({ user, size = 'md', className = '' }) => {
@@ -30,6 +30,21 @@ const Avatar = ({ user, size = 'md', className = '' }) => {
 
   const { nome, cognome, avatarType, avatarId } = user;
   const fullName = `${nome} ${cognome}`;
+
+  // Avatar immagine personalizzata
+  if (avatarType === 'custom') {
+    const customUrl = CUSTOM_AVATARS[avatarId];
+    if (customUrl) {
+      return (
+        <img
+          src={customUrl}
+          alt={fullName}
+          title={fullName}
+          className={`${sizeClasses[size]} rounded-full object-cover shadow-sm ${className}`}
+        />
+      );
+    }
+  }
 
   // Avatar emoji preimpostato
   if (isEmojiAvatar(avatarType)) {

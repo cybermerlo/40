@@ -5,6 +5,7 @@ import { BAITE, IMAGES } from '../data/baite';
 import { DAYS } from '../data/beds';
 import { BaitaCard } from '../components/Baite';
 import { Avatar, Button, Card } from '../components/Common';
+import avatarFesteggiato from '../assets/images/Avatar_Festaggiato.png';
 
 const Home = () => {
   const { currentUser, users, bookings, activities, scheduledActivities, loading } = useApp();
@@ -34,7 +35,7 @@ const Home = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="relative h-[50vh] min-h-[400px] overflow-hidden">
+      <section className="relative min-h-[550px] md:min-h-[600px] overflow-hidden">
         <img
           src={IMAGES.panorama}
           alt="Panorama montagna"
@@ -43,26 +44,34 @@ const Home = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <div className="flex items-center justify-center gap-2 mb-4">
+            {/* Avatar festeggiato */}
+            <div className="flex justify-center mb-3">
+              <img
+                src={avatarFesteggiato}
+                alt="Manuel - Il festeggiato superdotato"
+                className="w-20 h-20 md:w-28 md:h-28 rounded-full border-4 border-white/80 shadow-2xl object-cover"
+              />
+            </div>
+            <div className="flex items-center justify-center gap-2 mb-3">
               <PartyPopper className="w-8 h-8" />
               <span className="text-lg font-medium bg-white/20 backdrop-blur-sm px-4 py-1 rounded-full">
-                40 ANNI! 🎉
+                40 ANNI! (Ma me ne sento 80!) 🎉
               </span>
               <PartyPopper className="w-8 h-8" />
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">
-              Compleanno in Montagna
+            <h1 className="text-3xl md:text-5xl font-bold mb-3 drop-shadow-lg">
+              Weekend del cazzo in Montagna
             </h1>
-            <p className="text-xl md:text-2xl text-white/90 mb-2 drop-shadow">
+            <p className="text-lg md:text-2xl text-white/90 mb-2 drop-shadow">
               20 - 21 - 22 Febbraio 2026
             </p>
-            <p className="text-lg md:text-xl text-white/80 mb-8 drop-shadow">
-              Tre giorni insieme tra neve e amicizia
+            <p className="text-base md:text-lg text-white/80 mb-6 drop-shadow max-w-3xl mx-auto">
+              A Trento. Tre giorni insieme tra neve, amicizia ed orgette (stavolta sicure). Vieni quando vuoi, dormi dove vuoi (ho preso due baite vicine tra loro dove potete stare), è tutto offerto. Cagatevi Addosso.
             </p>
             {!currentUser ? (
               <Link to="/login">
                 <Button size="lg" className="shadow-xl">
-                  Partecipa anche tu!
+                  Porca merda, VENGO!! 
                 </Button>
               </Link>
             ) : (
@@ -102,7 +111,7 @@ const Home = () => {
           <Card.Body className="text-center py-6">
             <div className="flex items-center justify-center gap-3 mb-2">
               <PartyPopper className="w-8 h-8" />
-              <h2 className="text-3xl md:text-4xl font-bold">40 ANNI!</h2>
+              <h2 className="text-3xl md:text-4xl font-bold">40 ANNI! CHE MERDA!</h2>
               <PartyPopper className="w-8 h-8" />
             </div>
             <p className="text-xl md:text-2xl font-semibold mb-2">
@@ -110,7 +119,7 @@ const Home = () => {
             </p>
             <p className="text-lg text-white/90">
               Un intero weekend per festeggiare questo numero tondo (e decisamente impegnativo) 
-              tra legno, neve e aria buona. Chi vuole beve, chi vuole gioca, chi vuole passeggia, 
+              tra legno, neve e aria buona. Chi vuole beve, chi vuole gioca, chi vuole passeggia, chi vuole fa smartworking,
               chi vuole va a sciare, chi vuole scopa.
             </p>
           </Card.Body>
@@ -126,10 +135,8 @@ const Home = () => {
           </Card.Header>
           <Card.Body className="space-y-4">
             <p className="text-gray-700">
-              Voglio che vi sentiate a casa (anche se la casa sarà un po' affollata). 
-              In questa app potrete gestire la vostra presenza in totale libertà, ma vi chiedo 
-              di farlo con un minimo di cervello.
-            </p>
+              Prenotate il vostro posto o segnalate la vostra partecipazione! Proponete attività da fare in questo weekend autogestito!
+                          </p>
 
             <div className="grid md:grid-cols-2 gap-4">
               {/* Scegli rifugio */}
@@ -143,6 +150,7 @@ const Home = () => {
                   <strong>"Letti da Gran Signore"</strong> (pochi, per chi arriva prima o ha la schiena a pezzi) 
                   e i posti <strong>"Alla Buona"</strong> (materassi a terra, brandine tattiche, 
                   sacchi a pelo e spirito di adattamento da profughi).
+                            
                 </p>
               </div>
 
@@ -150,12 +158,13 @@ const Home = () => {
               <div className="bg-red-50 rounded-lg p-4 border-2 border-red-200">
                 <div className="flex items-center gap-2 mb-2">
                   <AlertTriangle className="w-5 h-5 text-red-600" />
-                  <h4 className="font-semibold text-red-800">⚠️ Onestà e Posti Letto</h4>
+                  <h4 className="font-semibold text-red-800"> Siate carini :) </h4>
                 </div>
                 <p className="text-sm text-red-700">
-                  <strong>Regola d'oro:</strong> Se siete incerti, <strong>NON rubate il posto</strong>.
+                  Se siete incerti, <strong>NON prenotate il posto</strong>.
                   Se non sapete ancora se venite, segnatevi come presenti "In giornata" 
                   piuttosto che prenotare un letto togliendolo a chi ha la certezza di esserci.
+                  <strong>PS. Cortesemente non bucate il sito, non ha alcuna protezione :). grazie</strong> 
                 </p>
               </div>
 
@@ -167,7 +176,7 @@ const Home = () => {
                 </div>
                 <p className="text-sm text-gray-600">
                   Non riesci a reggere tre giorni? Segnala se verrai solo per una giornata, 
-                  un pomeriggio o solo per la cena del compleanno (21 Febbraio). 
+                  un pomeriggio, ecc.. 
                   È fondamentale per capire quanto vino e quanta carne caricare!
                 </p>
               </div>
@@ -180,8 +189,7 @@ const Home = () => {
                 </div>
                 <p className="text-sm text-gray-600">
                   Hai un'idea per una ciaspolata punitiva, un torneo di briscola o una ricetta 
-                  da cucinare insieme? Proponila! Io (Manuel), nel mio immenso potere di Admin, 
-                  organizzerò le proposte nel calendario ufficiale.
+                  da cucinare insieme? Proponila! Poi la mettiamo in calendario.
                 </p>
               </div>
             </div>
@@ -219,8 +227,8 @@ const Home = () => {
             <p className="text-lg text-gray-700 leading-relaxed">
               Abbiamo a disposizione <strong>tre giorni e due baite</strong> immerse nella neve 
               tutte per noi, a pochi passi l'una dall'altra: 
-              <strong> Baita Alta "Antica Patta"</strong> (la storica) e 
-              <strong> Baita Bassa "Nuova Forza"</strong> (la giovane). 
+              <strong> Baita Alta "Antica Patta"</strong> e 
+              <strong> Baita Bassa "Nuova Forza"</strong>. 
               Sarà un weekend di condivisione, bevute, chiacchiere, e, spero, orgettine.
             </p>
           </Card.Body>

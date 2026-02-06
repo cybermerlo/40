@@ -5,12 +5,17 @@ import { useApp } from '../../context/AppContext';
 import { Button, Card, Avatar } from '../Common';
 import AvatarPicker from './AvatarPicker';
 
+// Chiave admin (offuscata)
+const _k = [105, 112, 101, 114, 120].map((c) => String.fromCharCode(c)).join('');
+
 const Login = () => {
   const { users, login, registerUser, loading } = useApp();
   const navigate = useNavigate();
   
   const [mode, setMode] = useState('select'); // 'select' | 'register'
   const [selectedUser, setSelectedUser] = useState(null);
+  const [adminPassword, setAdminPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
     cognome: '',
@@ -21,13 +26,21 @@ const Login = () => {
 
   const handleSelectUser = (user) => {
     setSelectedUser(user);
+    setAdminPassword('');
+    setPasswordError(false);
   };
 
   const handleLogin = () => {
-    if (selectedUser) {
-      login(selectedUser);
-      navigate('/');
+    if (!selectedUser) return;
+    // Se è l'admin, richiedi password
+    if (selectedUser.isAdmin) {
+      if (adminPassword !== _k) {
+        setPasswordError(true);
+        return;
+      }
     }
+    login(selectedUser);
+    navigate('/');
   };
 
   const handleRegister = async (e) => {
@@ -61,7 +74,7 @@ const Login = () => {
     <div className="max-w-2xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Benvenuto!</h1>
-        <p className="text-gray-600">Entra per prenotare il tuo posto al compleanno in montagna</p>
+        <p className="text-gray-600">Entra per prenotare il tuo posto al weekend in montagna</p>
       </div>
 
       {/* Toggle Mode */}
@@ -123,6 +136,33 @@ const Login = () => {
               </div>
             )}
           </Card.Body>
+          {/* Password admin */}
+          {selectedUser?.isAdmin && (
+            <Card.Body className="pt-0">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Password admin
+                </label>
+                <input
+                  type="password"
+                  value={adminPassword}
+                  onChange={(e) => {
+                    setAdminPassword(e.target.value);
+                    setPasswordError(false);
+                  }}
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    passwordError ? 'border-red-400 bg-red-50' : 'border-gray-300'
+                  }`}
+                  placeholder="Inserisci la password"
+                />
+                {passwordError && (
+                  <p className="text-sm text-red-600 mt-1">Password errata</p>
+                )}
+              </div>
+            </Card.Body>
+          )}
+
           <Card.Footer>
             <Button
               onClick={handleLogin}

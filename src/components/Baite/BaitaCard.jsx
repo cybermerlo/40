@@ -14,9 +14,9 @@ const BaitaCard = ({ baitaId }) => {
   
   // Calcola occupazione per entrambe le notti
   const getOccupiedSpots = (night) => {
-    return bookings
-      .filter((b) => beds.some((bed) => bed.id === b.bedId) && b.night === night)
-      .reduce((sum, b) => sum + (b.spots || 1), 0);
+    return bookings.filter(
+      (b) => beds.some((bed) => bed.id === b.bedId) && b.night === night
+    ).length;
   };
 
   // Utenti che hanno prenotato
@@ -59,16 +59,18 @@ const BaitaCard = ({ baitaId }) => {
               <Users className="w-4 h-4" />
               <span className="text-sm font-medium">{totalSpots} posti</span>
             </div>
-            <a
-              href={baita.googleMapsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(baita.googleMapsUrl, '_blank', 'noopener,noreferrer');
+              }}
               className="flex items-center gap-1 text-blue-600 hover:text-blue-700"
             >
               <MapPin className="w-4 h-4" />
               <span className="text-sm">Mappa</span>
-            </a>
+            </button>
           </div>
 
           {/* Occupazione per notte */}

@@ -1,16 +1,42 @@
 import { useState } from 'react';
-import { User, Users, Check, X } from 'lucide-react';
-import { BEDS, COMFORT_LEVELS } from '../../data/beds';
+import { User, Users, Check, X, AlertCircle } from 'lucide-react';
+import { BEDS, COMFORT_LEVELS, NIGHTS, DAYS, DAY_PERIODS } from '../../data/beds';
 import { useApp } from '../../context/AppContext';
 import { Avatar, Button, ComfortBadge, Modal } from '../Common';
 
+// Mappa notte -> presenze automatiche suggerite
+const NIGHT_TO_PRESENCE = {
+  '2026-02-20': [
+    { date: '2026-02-20', period: 'sera' },
+    { date: '2026-02-21', period: 'mattina' },
+    { date: '2026-02-21', period: 'pomeriggio' },
+  ],
+  '2026-02-21': [
+    { date: '2026-02-21', period: 'sera' },
+    { date: '2026-02-22', period: 'mattina' },
+  ],
+};
+
 const BedSlot = ({ bedId, night }) => {
   const bed = BEDS[bedId];
-  const { currentUser, bookings, users, addBooking, deleteBooking, getAvailableSpots } = useApp();
-  
+  const {
+    currentUser,
+    bookings,
+    users,
+    addBooking,
+    deleteBooking,
+    getAvailableSpots,
+    getUserBookingForNight,
+    addDayVisit,
+    dayVisits,
+  } = useApp();
+
   const [showModal, setShowModal] = useState(false);
-  const [selectedSpots, setSelectedSpots] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [bookingError, setBookingError] = useState(null);
+  // Step del modal: 'confirm' = conferma prenotazione, 'presence' = selezione presenze
+  const [modalStep, setModalStep] = useState('confirm');
+  const [selectedPresences, setSelectedPresences] = useState([]);
 
   if (!bed) return null;
 
@@ -23,28 +49,87 @@ const BedSlot = ({ bedId, night }) => {
   const userBooking = bedBookings.find((b) => b.userId === currentUser?.id);
   const hasUserBooked = !!userBooking;
 
+  // Verifica se l'utente ha già una prenotazione per questa notte (qualsiasi letto)
+  const existingNightBooking = currentUser
+    ? getUserBookingForNight(currentUser.id, night)
+    : null;
+  const hasBookedOtherBed = existingNightBooking && !hasUserBooked;
+
   // Utenti che hanno prenotato
-  const bookedUsers = bedBookings.map((b) => ({
-    ...users.find((u) => u.id === b.userId),
-    spots: b.spots || 1,
-    bookingId: b.id,
-  })).filter((u) => u.id);
+  const bookedUsers = bedBookings
+    .map((b) => ({
+      ...users.find((u) => u.id === b.userId),
+      bookingId: b.id,
+    }))
+    .filter((u) => u.id);
+
+  const openBookingModal = () => {
+    setBookingError(null);
+    setModalStep('confirm');
+    // Pre-seleziona le presenze suggerite in base alla notte prenotata
+    const suggested = NIGHT_TO_PRESENCE[night] || [];
+    const suggestedKeys = suggested.map((s) => `${s.date}_${s.period}`);
+    // Aggiungi anche le presenze che l'utente ha già indicato
+    const existingKeys = DAYS.flatMap((day) =>
+      DAY_PERIODS.filter((period) =>
+        dayVisits.some(
+          (v) => v.userId === currentUser?.id && v.date === day.id && v.period === period.id
+        )
+      ).map((period) => `${day.id}_${period.id}`)
+    );
+    // Unione dei suggeriti + già esistenti (senza duplicati)
+    setSelectedPresences([...new Set([...suggestedKeys, ...existingKeys])]);
+    setShowModal(true);
+  };
 
   const handleBook = async () => {
     if (!currentUser) return;
     setLoading(true);
+    setBookingError(null);
     try {
       await addBooking({
         bedId,
         night,
-        spots: selectedSpots,
       });
-      setShowModal(false);
+      // Passa allo step presenze
+      setModalStep('presence');
     } catch (error) {
-      console.error('Errore prenotazione:', error);
+      setBookingError(error.message || 'Errore durante la prenotazione');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleConfirmPresences = async () => {
+    setLoading(true);
+    try {
+      // Itera su tutte le giornate e periodi selezionati
+      for (const day of DAYS) {
+        for (const period of DAY_PERIODS) {
+          const key = `${day.id}_${period.id}`;
+          const alreadyExists = dayVisits.some(
+            (v) =>
+              v.userId === currentUser?.id &&
+              v.date === day.id &&
+              v.period === period.id
+          );
+          if (selectedPresences.includes(key) && !alreadyExists) {
+            await addDayVisit({ date: day.id, period: period.id });
+          }
+        }
+      }
+      setShowModal(false);
+    } catch (error) {
+      console.error('Errore aggiunta presenze:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const togglePresence = (key) => {
+    setSelectedPresences((prev) =>
+      prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+    );
   };
 
   const handleCancel = async () => {
@@ -60,6 +145,17 @@ const BedSlot = ({ bedId, night }) => {
   };
 
   const comfort = COMFORT_LEVELS[bed.comfort];
+
+  // Helper per label dei periodi
+  const getPeriodLabel = (period) => {
+    const p = DAY_PERIODS.find((dp) => dp.id === period);
+    return p ? p.label : period;
+  };
+
+  const getDayLabel = (date) => {
+    const d = DAYS.find((day) => day.id === date);
+    return d ? d.shortLabel : date;
+  };
 
   return (
     <>
@@ -110,11 +206,6 @@ const BedSlot = ({ bedId, night }) => {
                 <span className="text-sm font-medium flex-1">
                   {user.nome} {user.cognome}
                 </span>
-                {user.spots > 1 && (
-                  <span className="text-xs bg-gray-100 px-2 py-1 rounded">
-                    {user.spots} posti
-                  </span>
-                )}
                 {user.id === currentUser?.id && (
                   <button
                     onClick={handleCancel}
@@ -131,15 +222,22 @@ const BedSlot = ({ bedId, night }) => {
         )}
 
         {/* Azioni */}
-        {currentUser && !hasUserBooked && !isFullyBooked && (
+        {currentUser && !hasUserBooked && !isFullyBooked && !hasBookedOtherBed && (
           <Button
-            onClick={() => setShowModal(true)}
+            onClick={openBookingModal}
             variant="primary"
             size="sm"
             className="w-full"
           >
             Prenota
           </Button>
+        )}
+
+        {currentUser && hasBookedOtherBed && !isFullyBooked && (
+          <div className="flex items-center gap-2 text-amber-600 text-sm bg-amber-50 rounded-lg p-2">
+            <AlertCircle className="w-4 h-4 flex-shrink-0" />
+            <span>Hai già un letto per questa notte</span>
+          </div>
         )}
 
         {hasUserBooked && (
@@ -158,61 +256,155 @@ const BedSlot = ({ bedId, night }) => {
       <Modal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-        title="Prenota posto"
+        title={modalStep === 'confirm' ? 'Prenota posto letto' : 'Indica la tua presenza'}
       >
         <div className="space-y-4">
-          <div>
-            <p className="font-medium text-gray-800">{bed.tipo}</p>
-            <p className="text-sm text-gray-500">{bed.stanza} - {BEDS[bedId]?.baita === 'A' ? 'Antica Patta' : 'Nuova Forza'}</p>
-          </div>
-
-          {/* Selezione posti (per letti matrimoniali) */}
-          {bed.canBookSingle && bed.posti > 1 && availableSpots > 1 && (
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Quanti posti vuoi prenotare?
-              </label>
-              <div className="flex gap-2">
-                {[...Array(Math.min(availableSpots, bed.posti))].map((_, i) => (
-                  <button
-                    key={i + 1}
-                    onClick={() => setSelectedSpots(i + 1)}
-                    className={`px-4 py-2 rounded-lg border-2 font-medium transition-all ${
-                      selectedSpots === i + 1
-                        ? 'border-blue-500 bg-blue-50 text-blue-700'
-                        : 'border-gray-200 hover:border-gray-300'
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
+          {modalStep === 'confirm' && (
+            <>
+              <div>
+                <p className="font-medium text-gray-800">{bed.tipo}</p>
+                <p className="text-sm text-gray-500">
+                  {bed.stanza} -{' '}
+                  {BEDS[bedId]?.baita === 'A' ? 'Antica Patta' : 'Nuova Forza'}
+                </p>
               </div>
-            </div>
+
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <p className="text-sm text-blue-800">
+                  Stai prenotando <strong>1 posto</strong> per dormire la notte del{' '}
+                  <strong>
+                    {night === '2026-02-20' ? 'Venerdì 20' : 'Sabato 21'} Febbraio
+                  </strong>
+                  . Ogni persona prenota solo per sé.
+                </p>
+              </div>
+
+              <div className="bg-amber-50 border border-amber-200 rounded-lg p-3">
+                <p className="text-xs text-amber-800">
+                  <strong>Nota:</strong> Prenotare un letto significa che dormirai qui
+                  la notte. Se vieni solo durante il giorno, non prenotare un letto ma
+                  indica la tua presenza nella sezione Programma.
+                </p>
+              </div>
+
+              {bookingError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+                  <p className="text-sm text-red-700 flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 flex-shrink-0" />
+                    {bookingError}
+                  </p>
+                </div>
+              )}
+
+              <div className="flex gap-3">
+                <Button
+                  variant="secondary"
+                  onClick={() => setShowModal(false)}
+                  className="flex-1"
+                >
+                  Annulla
+                </Button>
+                <Button onClick={handleBook} loading={loading} className="flex-1">
+                  Conferma
+                </Button>
+              </div>
+            </>
           )}
 
-          <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-sm text-gray-600">
-              Stai prenotando <strong>{selectedSpots}</strong> {selectedSpots === 1 ? 'posto' : 'posti'} per la notte del{' '}
-              <strong>{night === '2026-02-20' ? 'Venerdì 20' : 'Sabato 21'} Febbraio</strong>
-            </p>
-          </div>
+          {modalStep === 'presence' && (
+            <>
+              <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+                <p className="text-sm text-emerald-800">
+                  Posto prenotato con successo! Ora indica in quali momenti sarai
+                  presente durante il weekend. Abbiamo pre-selezionato i periodi
+                  in cui sarai sicuramente lì dato che dormi la notte.
+                </p>
+              </div>
 
-          <div className="flex gap-3">
-            <Button
-              variant="secondary"
-              onClick={() => setShowModal(false)}
-              className="flex-1"
-            >
-              Annulla
-            </Button>
-            <Button
-              onClick={handleBook}
-              loading={loading}
-              className="flex-1"
-            >
-              Conferma
-            </Button>
-          </div>
+              <div className="space-y-4">
+                {DAYS.map((day) => {
+                  const suggestedKeys = (NIGHT_TO_PRESENCE[night] || []).map(
+                    (s) => `${s.date}_${s.period}`
+                  );
+
+                  return (
+                    <div key={day.id}>
+                      <p className="text-sm font-semibold text-gray-700 mb-2">
+                        {day.label}
+                      </p>
+                      <div className="space-y-1.5">
+                        {DAY_PERIODS.map((period) => {
+                          const key = `${day.id}_${period.id}`;
+                          const isSelected = selectedPresences.includes(key);
+                          const isSuggested = suggestedKeys.includes(key);
+                          const alreadyExists = dayVisits.some(
+                            (v) =>
+                              v.userId === currentUser?.id &&
+                              v.date === day.id &&
+                              v.period === period.id
+                          );
+
+                          return (
+                            <button
+                              key={key}
+                              onClick={() => !alreadyExists && togglePresence(key)}
+                              className={`w-full flex items-center justify-between p-2.5 rounded-lg border-2 transition-all ${
+                                alreadyExists
+                                  ? 'border-gray-200 bg-gray-50 opacity-60'
+                                  : isSelected
+                                  ? 'border-emerald-500 bg-emerald-50'
+                                  : 'border-gray-200 hover:border-gray-300'
+                              }`}
+                              disabled={alreadyExists}
+                            >
+                              <div className="flex items-center gap-3">
+                                <span className="text-xl">
+                                  {period.id === 'mattina' && '🌅'}
+                                  {period.id === 'pomeriggio' && '☀️'}
+                                  {period.id === 'sera' && '🌙'}
+                                </span>
+                                <div className="text-left">
+                                  <p className="font-medium text-sm">
+                                    {period.label}
+                                    <span className="text-gray-400 font-normal ml-1">
+                                      ({period.time})
+                                    </span>
+                                  </p>
+                                  {alreadyExists && (
+                                    <p className="text-xs text-gray-500">
+                                      Già indicata
+                                    </p>
+                                  )}
+                                  {isSuggested && !alreadyExists && (
+                                    <p className="text-xs text-blue-500">
+                                      Suggerito (dormi qui)
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                              {(isSelected || alreadyExists) && (
+                                <span className="text-emerald-600 font-medium">
+                                  ✓
+                                </span>
+                              )}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <Button
+                onClick={handleConfirmPresences}
+                loading={loading}
+                className="w-full"
+              >
+                Conferma presenze
+              </Button>
+            </>
+          )}
         </div>
       </Modal>
     </>

@@ -1,0 +1,43 @@
+Allora devo sviluppare un’app che serve per gestire le prenotazioni dei miei amici alla mia festa di compleanno, la quale avrà luogo nel corso di tre giorni in montagna. Questa applicazione serve per ciascuno degli invitati che al link per dire se viene oppure no decidere che notti rimane a dormire in che posto in che letti oppure se viene semplicemente durante la giornata alla mattina al pomeriggio. Praticamente, io ho a disposizione queste due case in montagna, una vicino all’altra che ho a disposizione venerdì 20 febbraio fino a domenica 22 febbraio. In questo portale che voglio fare in questa app, voglio che ci sia la foto di ciascuno delle case che ognuno può selezionare, ok può vedere quali sono i posti letto che sono ancora disponibili decidere in quale vuole collocarsi per quanti giorni. Oppure può semplicemente dire o aggiungere che viene soltanto in giornata o insomma può scegliere quando e come fare.. Se non c’è bisogno di fare sistemi di sicurezza del sito perché sono amici però diamo la possibilità a ciascuno quando si collega al sito di registrarsi e può registrarsi se la prima volta che entra oppure può selezionar arsi da un elenco se sta già tornando ed era si era già registrato un’altra volta non c’è bisogno di password semplicemente uno inserisce il suo nome e cognome oppure seleziona il suo nome e cognome che è già indicato una volta che è dentro a disposizione, appunto queste possibilità di decidere quando venire a dormire o comunque quando venire a stare insieme in compagnia il mio compleanno è il 21 febbraio nel dettaglio. Ciascuna delle case avrà sia dei posti letto normali, quindi letti normali sia dei posti letto alla buona, ovvero magari con sacco a pelo materassino in un angolo e quindi ciascuno può selezionare in base alla disponibilità che c’è se qualcuno non l’ha già prenotato per quella notte uno oppure l’altro posto. Ti fornirò i dettagli della disponibilità di ciascuna Delle due case quanti eletti ha eccetera eccetera. Ovviamente le persone registrate possono anche cambiare la loro prenotazione nel corso del tempo. Un’altra funzionalità è quella di stabilire stabilire che attività fare nel corso delle tre giornate e per questo ci sarà un calendario che potrà essere popolato dagli utenti in cui si decide cosa fare o meglio gli utenti possono proporre delle attività in una sezione del sito in cui si dice perché non facciamo questa attività e dopo l’utente principale admin che sarò io che puoi già registrare come Manuel Berno avrà la possibilità di spostare le attività proposte in un calendario dei tre giorni esattamente quando queste verranno fatte in modo tale che ognuno ha la panoramica di quello che si farà. Il data base di tutto quanto questo viene mantenuto in un file guest su GitHub di cui adesso ti darò i dati di accesso.. fai in modo che gli utenti quando si registrano possono devono appunto scrivere il loro nome e cognome e anche selezionare il loro avatar che possono selezionare da alcuni preimpostati che li dà a disposizione oppure possono fare caricare loro una foto o un un’immagine. Sarebbe bello che l’interfaccia sarebbe simpatica per far vedere chi c’è in quale giornata nelle varie case come sono gli ospiti in modo tale che tutti vedono tutti come sono messi.. 
+L'app ovviamente deve avere tutte le indicazioni e consigli utili su come raggiungere il posto e su come ci si muove. C'è molta neve al momento. Prepararsi. 
+Ho delle foto sia della baita A, che della B, che della strada che le collega che voglio caricare. 
+Fai capire il livello di comodità di ciacun posto disponibile. Classificali. Un utente puo anche prenotare un singolo di un matrimoniale.
+Gli utenti "propongono" attività ed appaiono in una bacheca dove possono essere poi collocate e distribuite in un calendario. Dai la possibilita di mettere un mi piace.
+In generale nell'app Tutto è visibile a tutti.
+
+Ecco come sono strutturate le baite:
+1) baita A - Alta (la chiamiamo "Antica Patta") - Localizzazione: https://maps.app.goo.gl/LeBE97UevXWNvCkHA?g_st=iw - 46°04'40.4"N 11°19'18.5"E - 46.077874, 11.321807
+- una stanza matrimoniale
+- ⁠una stanza doppia con letto a castello
+- ⁠c’è un disimpegno in cui ci sono due materassi che funge da stanzetta perché basta chiudere la tenda ma non è completamente chiusa come una stanza vera
+- ⁠se la gente non fa la sofisticata nella stanza matrimoniale ci stanno altri 2 letti (in sede ci sono già una brandina singola e un matrimoniale gonfiabile) e nella camera con il letto a castello ci sta un altro letto singolo
+- ⁠volendo c’è il divano come posto letto
+
+Ecco un riassunto:
+ID,Stanza,Tipo Letto,Posti,Comfort,Note
+A1,Camera Matrimoniale,Letto Matrimoniale,2,Standard,Letto principale
+A2,Camera Matrimoniale,Brandina Singola,1,Alla buona,Aggiuntivo nella matrimoniale
+A3,Camera Matrimoniale,Matrimoniale Gonfiabile,2,Alla buona,Aggiuntivo nella matrimoniale
+A4,Camera Doppia,Letto a Castello,2,Standard,"1 sopra, 1 sotto"
+A5,Camera Doppia,Letto Singolo,1,Standard,Aggiuntivo nella doppia
+A6,Disimpegno (Tenda),Materassi a terra,2,Alla buona,Spazio separato da tenda
+A7,Soggiorno,Divano,1,Alla buona,Posto di fortuna
+TOT,,,11,,
+
+
+2) baita B - Bassa (la chiamiamo "Nuova Forza") - Localizzazione: https://maps.app.goo.gl/sjFk9KAtUw2fjJVn7?g_st=iw - 46°04'17.8"N 11°19'19.4"E - 46.071622, 11.322063 -
+- ha una camera matrimoniale 
+- ⁠il divano letto
+- ⁠sopra il disimpegno/mansarda ci sono materassi con cuscini (direi tipo 3 posti letto) mio papà l’ha fatta sulla falsa riga di quella a grauno che ti piace 
+Ecco un riassunto:
+ID,Stanza,Tipo Letto,Posti,Comfort,Note
+B1,Camera Matrimoniale,Letto Matrimoniale,2,Standard,Letto principale
+B2,Soggiorno,Divano Letto,2,Standard,In zona comune
+B3,Mansarda/Disimpegno,Materassi,3,Alla buona,"Con cuscini, stile ""Grauno"""
+TOT,,,7,,
+
+
+GIST
+Secret Key (Token): [TOKEN_RIMOSSO_PER_SICUREZZA]
+Tipo di Token: GitHub Personal Access Token (Classic).
+https://gist.github.com/cybermerlo/70fb9b38686a85b429ed60fef11b017c

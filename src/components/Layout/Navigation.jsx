@@ -1,13 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Building2, Calendar, Lightbulb, Info, User } from 'lucide-react';
+import { Home, Building2, Calendar, Info, User } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../utils/helpers';
 
 const navItems = [
   { to: '/', label: 'Home', icon: Home },
   { to: '/baite', label: 'Baite', icon: Building2 },
-  { to: '/calendario', label: 'Calendario', icon: Calendar },
-  { to: '/attivita', label: 'Attività', icon: Lightbulb },
+  { to: '/calendario', label: 'Programma', icon: Calendar },
   { to: '/info', label: 'Info', icon: Info },
 ];
 

@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useState } from 'react';
-import { ArrowLeft, MapPin, ExternalLink, ChevronLeft, ChevronRight, Users } from 'lucide-react';
+import { ArrowLeft, MapPin, ExternalLink, ChevronLeft, ChevronRight, Users, Bed, Calendar, Info } from 'lucide-react';
 import { BAITE } from '../data/baite';
 import { getBedsByBaita, NIGHTS } from '../data/beds';
 import { BedSlot } from '../components/Baite';
@@ -147,10 +147,47 @@ const BaitaDetail = () => {
         </div>
       </div>
 
+      {/* Spiegazione dormire vs presenza */}
+      <Card className="mb-4 border-2 border-blue-200">
+        <Card.Body className="space-y-3">
+          <h3 className="text-lg font-bold text-gray-800 flex items-center gap-2">
+            <Info className="w-5 h-5 text-blue-600" />
+            Come funziona la prenotazione
+          </h3>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="bg-blue-50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Bed className="w-5 h-5 text-blue-600" />
+                <h4 className="font-semibold text-blue-800">Prenota un posto letto</h4>
+              </div>
+              <p className="text-sm text-blue-700">
+                Significa che <strong>dormirai qui la notte</strong>. Ogni persona prenota
+                un solo posto per sé. Quando prenoti, ti verrà chiesto automaticamente di
+                indicare anche in che giorni sarai presente.
+              </p>
+            </div>
+            <div className="bg-emerald-50 rounded-lg p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Calendar className="w-5 h-5 text-emerald-600" />
+                <h4 className="font-semibold text-emerald-800">Vieni solo in giornata?</h4>
+              </div>
+              <p className="text-sm text-emerald-700">
+                Se non hai bisogno di un letto ma verrai durante il giorno, <strong>non
+                prenotare un posto letto</strong>. Vai nella sezione{' '}
+                <Link to="/calendario" className="underline font-medium hover:no-underline">
+                  Programma
+                </Link>{' '}
+                e indica i momenti in cui sarai presente.
+              </p>
+            </div>
+          </div>
+        </Card.Body>
+      </Card>
+
       {/* Selezione notte */}
       <Card className="mb-8">
         <Card.Body>
-          <h2 className="text-xl font-bold text-gray-800 mb-4">Prenota il tuo posto</h2>
+          <h2 className="text-xl font-bold text-gray-800 mb-4">Prenota il tuo posto letto</h2>
           
           {!currentUser && (
             <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-4">

@@ -27,7 +27,6 @@ export const BEDS = {
     posti: 2,
     comfort: 'STANDARD',
     note: 'Letto principale della camera',
-    canBookSingle: true,
   },
   A2: {
     id: 'A2',
@@ -37,7 +36,6 @@ export const BEDS = {
     posti: 1,
     comfort: 'ALLA_BUONA',
     note: 'Aggiuntivo nella matrimoniale',
-    canBookSingle: false,
   },
   A3: {
     id: 'A3',
@@ -47,7 +45,6 @@ export const BEDS = {
     posti: 2,
     comfort: 'ALLA_BUONA',
     note: 'Materasso gonfiabile aggiuntivo',
-    canBookSingle: true,
   },
   A4: {
     id: 'A4',
@@ -57,7 +54,6 @@ export const BEDS = {
     posti: 2,
     comfort: 'STANDARD',
     note: '1 sopra, 1 sotto',
-    canBookSingle: true,
   },
   A5: {
     id: 'A5',
@@ -67,7 +63,6 @@ export const BEDS = {
     posti: 1,
     comfort: 'STANDARD',
     note: 'Aggiuntivo nella doppia',
-    canBookSingle: false,
   },
   A6: {
     id: 'A6',
@@ -77,7 +72,6 @@ export const BEDS = {
     posti: 2,
     comfort: 'ALLA_BUONA',
     note: 'Spazio separato da tenda, non completamente chiuso',
-    canBookSingle: true,
   },
   A7: {
     id: 'A7',
@@ -87,7 +81,6 @@ export const BEDS = {
     posti: 1,
     comfort: 'ALLA_BUONA',
     note: 'Posto di fortuna',
-    canBookSingle: false,
   },
   
   // Baita B - Nuova Forza (7 posti)
@@ -99,7 +92,6 @@ export const BEDS = {
     posti: 2,
     comfort: 'STANDARD',
     note: 'Letto principale',
-    canBookSingle: true,
   },
   B2: {
     id: 'B2',
@@ -109,7 +101,6 @@ export const BEDS = {
     posti: 2,
     comfort: 'STANDARD',
     note: 'In zona comune',
-    canBookSingle: true,
   },
   B3: {
     id: 'B3',
@@ -119,7 +110,6 @@ export const BEDS = {
     posti: 3,
     comfort: 'ALLA_BUONA',
     note: 'Con cuscini, stile "Grauno"',
-    canBookSingle: true,
   },
 };
 

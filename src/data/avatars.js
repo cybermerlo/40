@@ -1,3 +1,10 @@
+// Avatar personalizzati (immagini locali)
+import avatarFesteggiato from '../assets/images/Avatar_Festaggiato.png';
+
+export const CUSTOM_AVATARS = {
+  festeggiato: avatarFesteggiato,
+};
+
 // Avatar preimpostati e configurazione DiceBear
 
 // Stili DiceBear disponibili
@@ -60,6 +67,10 @@ export const PRESET_AVATARS = [
 
 // Funzione per ottenere l'URL dell'avatar in base al tipo
 export const getAvatarUrl = (avatarType, avatarId, userName = '') => {
+  if (avatarType === 'custom') {
+    return CUSTOM_AVATARS[avatarId] || '👤';
+  }
+
   if (avatarType === 'dicebear') {
     return getDiceBearUrl(userName || avatarId, avatarId);
   }

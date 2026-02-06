@@ -130,9 +130,7 @@ const Profilo = () => {
                     </p>
                     <div className="flex items-center gap-2 mt-1">
                       <ComfortBadge comfort={bed?.comfort} size="sm" showLabel={false} />
-                      <span className="text-xs text-gray-500">
-                        {booking.spots || 1} {(booking.spots || 1) === 1 ? 'posto' : 'posti'}
-                      </span>
+                      <span className="text-xs text-gray-500">1 posto</span>
                     </div>
                   </div>
                   <button

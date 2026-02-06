@@ -13,8 +13,8 @@ const INITIAL_DATABASE = {
       id: 'admin-manuel',
       nome: 'Manuel',
       cognome: 'Berno',
-      avatarType: 'dicebear',
-      avatarId: 'adventurer',
+      avatarType: 'custom',
+      avatarId: 'festeggiato',
       isAdmin: true,
       createdAt: new Date().toISOString(),
     },
@@ -131,6 +131,25 @@ export const getBookings = async () => {
 
 export const addBooking = async (bookingData) => {
   const db = await readDatabase();
+
+  // Validazione: un utente non può avere più di una prenotazione per la stessa notte
+  const existingNightBooking = db.bookings.find(
+    (b) => b.userId === bookingData.userId && b.night === bookingData.night
+  );
+  if (existingNightBooking) {
+    throw new Error('Hai già una prenotazione per questa notte.');
+  }
+
+  // Validazione: il letto non deve essere già pieno
+  const bedBookings = db.bookings.filter(
+    (b) => b.bedId === bookingData.bedId && b.night === bookingData.night
+  );
+  // Nota: il numero di posti del letto non è disponibile qui, ma evitiamo duplicati utente
+  const alreadyBooked = bedBookings.find((b) => b.userId === bookingData.userId);
+  if (alreadyBooked) {
+    throw new Error('Hai già prenotato questo letto per questa notte.');
+  }
+
   const newBooking = {
     id: generateId(),
     ...bookingData,

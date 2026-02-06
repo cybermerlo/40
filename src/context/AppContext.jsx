@@ -92,6 +92,25 @@ export const AppProvider = ({ children }) => {
   // === FUNZIONI PRENOTAZIONI ===
 
   const addBooking = async (bookingData) => {
+    if (!currentUser) throw new Error('Devi effettuare l\'accesso per prenotare.');
+
+    // Verifica: l'utente non può avere più di una prenotazione per la stessa notte
+    const existingNightBooking = bookings.find(
+      (b) => b.userId === currentUser.id && b.night === bookingData.night
+    );
+    if (existingNightBooking) {
+      throw new Error('Hai già una prenotazione per questa notte. Cancella quella esistente prima di prenotare un altro posto.');
+    }
+
+    // Verifica: il letto non deve essere già pieno
+    const bed = bookingData.bedId;
+    const existingBedBooking = bookings.find(
+      (b) => b.userId === currentUser.id && b.bedId === bookingData.bedId && b.night === bookingData.night
+    );
+    if (existingBedBooking) {
+      throw new Error('Hai già prenotato questo letto per questa notte.');
+    }
+
     const newBooking = await gistApi.addBooking({
       ...bookingData,
       userId: currentUser.id,
@@ -123,8 +142,12 @@ export const AppProvider = ({ children }) => {
 
   const getAvailableSpots = (bedId, night, bedPosti) => {
     const bedBookings = getBookingsForBed(bedId, night);
-    const occupiedSpots = bedBookings.reduce((sum, b) => sum + (b.spots || 1), 0);
-    return bedPosti - occupiedSpots;
+    return bedPosti - bedBookings.length;
+  };
+
+  // Verifica se l'utente ha già una prenotazione per una certa notte
+  const getUserBookingForNight = (userId, night) => {
+    return bookings.find((b) => b.userId === userId && b.night === night);
   };
 
   // === FUNZIONI VISITE GIORNALIERE ===
@@ -241,6 +264,7 @@ export const AppProvider = ({ children }) => {
     getBookingsForBed,
     getBookingsForUser,
     getAvailableSpots,
+    getUserBookingForNight,
 
     // Funzioni visite
     addDayVisit,

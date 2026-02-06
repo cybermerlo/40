@@ -83,7 +83,7 @@ const Info = () => {
               '🩴 Ciabatte per le baite',
               '🧺 Asciugamani',
               '🪥 Necessaire / prodotti personali',
-              '💊 Medicinali personali',
+              '💊 Preservativi e anticoncezionali',
               '📱 Caricatore telefono',
               '🎿 Attrezzatura sci (se hai)',
               '🎲 Giochi da tavolo',
@@ -125,18 +125,18 @@ const Info = () => {
         </Card.Header>
         <Card.Body>
           <p className="text-gray-600 mb-4">
-            Per qualsiasi domanda o emergenza, contatta Manuel (l'organizzatore):
+            Per qualsiasi domanda o emergenza, contatta Manuel:
           </p>
           <div className="flex flex-wrap gap-4">
             <a
-              href="tel:+393331234567"
+              href="tel:+393384805118"
               className="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-lg hover:bg-green-200 transition-colors"
             >
               <Phone className="w-5 h-5" />
               <span className="font-medium">Chiama</span>
             </a>
             <a
-              href="https://wa.me/393331234567"
+              href="https://wa.me/393384805118"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-lg hover:bg-green-200 transition-colors"
