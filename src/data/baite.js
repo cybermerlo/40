@@ -10,11 +10,13 @@ import baitaB3 from '../assets/images/Foto_Baita_B_3.jpeg';
 import baitaB4 from '../assets/images/Foto_Baita_B_4.jpg';
 import baitaB5 from '../assets/images/Foto_Baita_B_5.jpeg';
 import panorama from '../assets/images/Panorama_2.jpg';
+import panoramaSecret from '../assets/images/Panorama_3.png';
 import camminata from '../assets/images/Camminata_tra_le_due_baite_2.jpg';
 import mappaBaite from '../assets/images/Mappa_Baite.jpg';
 
 export const IMAGES = {
   panorama,
+  panoramaSecret,
   camminata,
   mappaBaite,
 };

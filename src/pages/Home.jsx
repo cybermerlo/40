@@ -1,5 +1,6 @@
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Calendar, Lightbulb, MapPin, ChevronRight, PartyPopper, Bed, AlertTriangle, Car, Info, Trash2 } from 'lucide-react';
+import { Users, Calendar, Lightbulb, MapPin, ChevronRight, PartyPopper, Bed, AlertTriangle, Car, Info, Trash2, Sparkles } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { BAITE, IMAGES } from '../data/baite';
 import { DAYS } from '../data/beds';
@@ -10,6 +11,26 @@ import avatarFesteggiato from '../assets/images/Avatar_Festaggiato.png';
 
 const Home = () => {
   const { currentUser, users, bookings, activities, scheduledActivities, loading, isAdmin, deleteUser } = useApp();
+  const [secretMode, setSecretMode] = useState(false);
+  const [flicker, setFlicker] = useState(false);
+  const flickerTimer = useRef(null);
+
+  // Flickering subliminale: ogni 12-35 secondi, flash di 250-500ms
+  useEffect(() => {
+    const scheduleFlicker = () => {
+      const delay = 12000 + Math.random() * 23000; // 12-35s
+      flickerTimer.current = setTimeout(() => {
+        setFlicker(true);
+        const flashDuration = 1500 + Math.random() * 1000; // 1.5-2.5s
+        setTimeout(() => {
+          setFlicker(false);
+          scheduleFlicker();
+        }, flashDuration);
+      }, delay);
+    };
+    scheduleFlicker();
+    return () => clearTimeout(flickerTimer.current);
+  }, []);
 
   // Statistiche
   const totalGuests = users.length;
@@ -37,12 +58,32 @@ const Home = () => {
     <div>
       {/* Hero Section */}
       <section className="relative min-h-[550px] md:min-h-[600px] overflow-hidden">
+        {/* Immagine normale */}
         <img
           src={IMAGES.panorama}
           alt="Panorama montagna"
           className="absolute inset-0 w-full h-full object-cover"
         />
+        {/* Immagine segreta sovrapposta - visibile in secretMode o durante flicker */}
+        <img
+          src={IMAGES.panoramaSecret}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover transition-opacity"
+          style={{
+            opacity: secretMode || flicker ? 1 : 0,
+            transitionDuration: flicker ? '80ms' : '500ms',
+          }}
+        />
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-transparent" />
+        {/* Tasto quasi segreto */}
+        <button
+          onClick={() => setSecretMode(prev => !prev)}
+          className="absolute bottom-3 right-3 z-20 p-1.5 rounded-full text-white/20 hover:text-white/60 transition-colors duration-300 cursor-default"
+          title=""
+          aria-label="Easter egg"
+        >
+          <Sparkles className="w-4 h-4" />
+        </button>
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white px-4">
             {/* Avatar festeggiato */}
