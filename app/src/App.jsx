@@ -7,7 +7,7 @@ import { Home, BaitaList, BaitaDetail, Attivita, Calendario, Info, Profilo } fro
 function App() {
   return (
     <AppProvider>
-      <BrowserRouter basename="/compleanno-montagna">
+      <BrowserRouter basename="/40">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
