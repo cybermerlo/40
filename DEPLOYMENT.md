@@ -41,7 +41,7 @@ Il workflow si attiverà automaticamente al prossimo push su `main`, oppure:
 
 ## Configurazione Locale (Sviluppo)
 
-Crea un file `.env` nella cartella `app/` con:
+Crea un file `.env` nella root del progetto con:
 
 ```env
 VITE_GIST_ID=70fb9b38686a85b429ed60fef11b017c
