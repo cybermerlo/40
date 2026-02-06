@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom';
-import { Users, Calendar, Lightbulb, MapPin, ChevronRight, PartyPopper, Bed, AlertTriangle, Car, Info } from 'lucide-react';
+import { Users, Calendar, Lightbulb, MapPin, ChevronRight, PartyPopper, Bed, AlertTriangle, Car, Info, Trash2 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { BAITE, IMAGES } from '../data/baite';
 import { DAYS } from '../data/beds';
 import { BaitaCard } from '../components/Baite';
 import { Avatar, Button, Card } from '../components/Common';
+import { getDisplayName } from '../utils/helpers';
 import avatarFesteggiato from '../assets/images/Avatar_Festaggiato.png';
 
 const Home = () => {
-  const { currentUser, users, bookings, activities, scheduledActivities, loading } = useApp();
+  const { currentUser, users, bookings, activities, scheduledActivities, loading, isAdmin, deleteUser } = useApp();
 
   // Statistiche
   const totalGuests = users.length;
@@ -307,12 +308,25 @@ const Home = () => {
                   >
                     <Avatar user={user} size="sm" />
                     <span className="text-sm font-medium text-gray-700">
-                      {user.nome} {user.cognome}
+                      {getDisplayName(user)}
                     </span>
                     {user.isAdmin && (
                       <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
                         Host
                       </span>
+                    )}
+                    {isAdmin && !user.isAdmin && (
+                      <button
+                        onClick={async () => {
+                          if (confirm(`Sei sicuro di voler eliminare ${getDisplayName(user)}? Verranno rimosse anche tutte le sue prenotazioni e presenze.`)) {
+                            await deleteUser(user.id);
+                          }
+                        }}
+                        className="text-gray-400 hover:text-red-500 p-0.5 ml-1"
+                        title="Elimina utente (admin)"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
                     )}
                   </div>
                 ))}

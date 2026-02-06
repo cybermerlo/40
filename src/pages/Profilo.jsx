@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext';
 import { BEDS, NIGHTS, DAYS, DAY_PERIODS } from '../data/beds';
 import { BAITE } from '../data/baite';
 import { Avatar, Button, Card, Modal, ComfortBadge } from '../components/Common';
+import { getDisplayName } from '../utils/helpers';
 import { AvatarPicker } from '../components/Auth';
 
 const Profilo = () => {
@@ -77,7 +78,7 @@ const Profilo = () => {
           </div>
           <div className="text-center sm:text-left flex-1">
             <h1 className="text-2xl font-bold text-gray-800">
-              {currentUser.nome} {currentUser.cognome}
+              {getDisplayName(currentUser)}
             </h1>
             {currentUser.isAdmin && (
               <span className="inline-block mt-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
@@ -211,7 +212,7 @@ const Profilo = () => {
           <AvatarPicker
             avatarType={editForm.avatarType}
             avatarId={editForm.avatarId}
-            userName={`${currentUser.nome} ${currentUser.cognome}`}
+            userName={getDisplayName(currentUser)}
             onChange={(avatarType, avatarId) => setEditForm({ avatarType, avatarId })}
           />
 

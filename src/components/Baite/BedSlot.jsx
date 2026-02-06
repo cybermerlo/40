@@ -3,6 +3,7 @@ import { User, Users, Check, X, AlertCircle } from 'lucide-react';
 import { BEDS, COMFORT_LEVELS, NIGHTS, DAYS, DAY_PERIODS } from '../../data/beds';
 import { useApp } from '../../context/AppContext';
 import { Avatar, Button, ComfortBadge, Modal } from '../Common';
+import { getDisplayName } from '../../utils/helpers';
 
 // Mappa notte -> presenze automatiche suggerite
 const NIGHT_TO_PRESENCE = {
@@ -29,6 +30,7 @@ const BedSlot = ({ bedId, night }) => {
     getUserBookingForNight,
     addDayVisit,
     dayVisits,
+    isAdmin,
   } = useApp();
 
   const [showModal, setShowModal] = useState(false);
@@ -132,11 +134,15 @@ const BedSlot = ({ bedId, night }) => {
     );
   };
 
-  const handleCancel = async () => {
-    if (!userBooking) return;
+  const handleCancel = async (bookingId) => {
+    const targetId = bookingId || userBooking?.id;
+    if (!targetId) return;
+    if (bookingId && bookingId !== userBooking?.id) {
+      if (!confirm('Sei sicuro di voler cancellare questa prenotazione?')) return;
+    }
     setLoading(true);
     try {
-      await deleteBooking(userBooking.id);
+      await deleteBooking(targetId);
     } catch (error) {
       console.error('Errore cancellazione:', error);
     } finally {
@@ -204,14 +210,14 @@ const BedSlot = ({ bedId, night }) => {
               >
                 <Avatar user={user} size="sm" />
                 <span className="text-sm font-medium flex-1">
-                  {user.nome} {user.cognome}
+                  {getDisplayName(user)}
                 </span>
-                {user.id === currentUser?.id && (
+                {(user.id === currentUser?.id || isAdmin) && (
                   <button
-                    onClick={handleCancel}
+                    onClick={() => handleCancel(user.bookingId)}
                     disabled={loading}
                     className="text-red-500 hover:text-red-700 p-1"
-                    title="Cancella prenotazione"
+                    title={user.id === currentUser?.id ? 'Cancella prenotazione' : 'Rimuovi prenotazione (admin)'}
                   >
                     <X className="w-4 h-4" />
                   </button>

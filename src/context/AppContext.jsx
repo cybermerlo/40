@@ -79,6 +79,23 @@ export const AppProvider = ({ children }) => {
     return newUser;
   };
 
+  const deleteUser = async (userId) => {
+    await gistApi.deleteUser(userId);
+    setUsers((prev) => prev.filter((u) => u.id !== userId));
+    setBookings((prev) => prev.filter((b) => b.userId !== userId));
+    setDayVisits((prev) => prev.filter((v) => v.userId !== userId));
+    // Rimuovi attività dell'utente e relative schedulazioni
+    const userActivityIds = activities.filter((a) => a.userId === userId).map((a) => a.id);
+    setActivities((prev) =>
+      prev
+        .filter((a) => a.userId !== userId)
+        .map((a) => ({ ...a, likes: (a.likes || []).filter((id) => id !== userId) }))
+    );
+    setScheduledActivities((prev) =>
+      prev.filter((sa) => !userActivityIds.includes(sa.activityId))
+    );
+  };
+
   const updateCurrentUser = async (userData) => {
     if (!currentUser) return;
     const updated = await gistApi.updateUser(currentUser.id, userData);
@@ -255,6 +272,7 @@ export const AppProvider = ({ children }) => {
     logout,
     registerUser,
     updateCurrentUser,
+    deleteUser,
     getUserById,
 
     // Funzioni prenotazioni

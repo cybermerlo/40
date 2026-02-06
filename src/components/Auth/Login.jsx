@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserPlus, Users, ArrowRight } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { Button, Card, Avatar } from '../Common';
+import { getDisplayName } from '../../utils/helpers';
 import AvatarPicker from './AvatarPicker';
 
 // Chiave admin (offuscata)
@@ -125,7 +126,7 @@ const Login = () => {
                     <Avatar user={user} size="md" />
                     <div className="text-left">
                       <p className="font-medium text-gray-800">
-                        {user.nome} {user.cognome}
+                        {getDisplayName(user)}
                       </p>
                       {user.isAdmin && (
                         <span className="text-xs text-blue-600 font-medium">Admin</span>

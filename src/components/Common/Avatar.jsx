@@ -1,5 +1,5 @@
 import { getDiceBearUrl, isEmojiAvatar, PRESET_AVATARS, CUSTOM_AVATARS } from '../../data/avatars';
-import { getInitials, stringToColor } from '../../utils/helpers';
+import { getDisplayName, getInitials, stringToColor } from '../../utils/helpers';
 
 const Avatar = ({ user, size = 'md', className = '' }) => {
   const sizeClasses = {
@@ -29,7 +29,7 @@ const Avatar = ({ user, size = 'md', className = '' }) => {
   }
 
   const { nome, cognome, avatarType, avatarId } = user;
-  const fullName = `${nome} ${cognome}`;
+  const fullName = getDisplayName(user);
 
   // Avatar immagine personalizzata
   if (avatarType === 'custom') {

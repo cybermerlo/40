@@ -47,7 +47,7 @@ export const BAITE = {
     id: 'B',
     nome: 'Nuova Forza',
     soprannome: 'La Baita Bassa',
-    descrizione: 'Baita accogliente e moderna, costruita sulla falsa riga di quella di Grauno. Perfetta per piccoli gruppi.',
+    descrizione: 'Baita accogliente e moderna, costruita sulla falsa riga di quella di Grauno. Più spazio per eventi in comune..',
     postiTotali: 7,
     coordinate: {
       lat: 46.071622,

@@ -48,7 +48,7 @@ const BaitaList = () => {
           <h3 className="font-bold text-gray-800 mb-2">Il percorso tra le baite</h3>
           <p className="text-gray-600">
             Una breve camminata nella neve collega le due baite. Perfetta per prendere 
-            una boccata d'aria fresca tra un'attività e l'altra!
+            una boccata d'aria fresca tra un'attività e l'altra! Ma c'è la neve ed i sodomiti dietro agli alberi pertanto attenti!
           </p>
         </Card.Body>
       </Card>

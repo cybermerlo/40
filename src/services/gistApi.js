@@ -111,6 +111,29 @@ export const addUser = async (userData) => {
   return newUser;
 };
 
+export const deleteUser = async (userId) => {
+  const db = await readDatabase();
+  // Rimuovi l'utente
+  db.users = db.users.filter((u) => u.id !== userId);
+  // Rimuovi tutte le prenotazioni dell'utente
+  db.bookings = db.bookings.filter((b) => b.userId !== userId);
+  // Rimuovi tutte le presenze dell'utente
+  db.dayVisits = db.dayVisits.filter((v) => v.userId !== userId);
+  // Rimuovi le attività proposte dall'utente
+  const userActivityIds = db.activities.filter((a) => a.userId === userId).map((a) => a.id);
+  db.activities = db.activities.filter((a) => a.userId !== userId);
+  // Rimuovi le schedulazioni delle attività eliminate
+  db.scheduledActivities = db.scheduledActivities.filter(
+    (sa) => !userActivityIds.includes(sa.activityId)
+  );
+  // Rimuovi i like dell'utente dalle attività rimaste
+  db.activities = db.activities.map((a) => ({
+    ...a,
+    likes: (a.likes || []).filter((id) => id !== userId),
+  }));
+  await writeDatabase(db);
+};
+
 export const updateUser = async (userId, userData) => {
   const db = await readDatabase();
   const index = db.users.findIndex((u) => u.id === userId);

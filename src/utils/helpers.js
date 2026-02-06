@@ -32,6 +32,12 @@ export const stringToColor = (str) => {
   return `hsl(${hue}, 70%, 50%)`;
 };
 
+// Nome visualizzato (nome + cognome, senza spazi superflui)
+export const getDisplayName = (user) => {
+  if (!user) return '';
+  return [user.nome, user.cognome].filter(Boolean).join(' ').trim();
+};
+
 // Ottieni le iniziali da nome e cognome
 export const getInitials = (nome, cognome) => {
   const n = nome?.charAt(0)?.toUpperCase() || '';

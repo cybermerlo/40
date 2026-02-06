@@ -14,7 +14,7 @@ import { useApp } from '../context/AppContext';
 import { DAYS, DAY_PERIODS } from '../data/beds';
 import { Card, Avatar, Button, Modal } from '../components/Common';
 import { ActivityCard, ActivityForm } from '../components/Activities';
-import { groupBy, sortByCreatedAt } from '../utils/helpers';
+import { groupBy, sortByCreatedAt, getDisplayName } from '../utils/helpers';
 
 const TIME_SLOTS = [
   { id: 'mattina', label: 'Mattina', time: '8:00 - 12:00', icon: Sunrise },
@@ -240,7 +240,7 @@ const Calendario = () => {
                     </p>
                     <div className="flex flex-wrap gap-1">
                       {visitors.slice(0, 8).map((user) => (
-                        <div key={user.id} className="flex items-center gap-1" title={`${user.nome} ${user.cognome}`}>
+                        <div key={user.id} className="flex items-center gap-1" title={getDisplayName(user)}>
                           <Avatar user={user} size="xs" />
                         </div>
                       ))}
