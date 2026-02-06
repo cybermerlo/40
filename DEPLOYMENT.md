@@ -25,9 +25,11 @@ Il token GitHub viene esposto nel frontend (variabili `VITE_*` sono pubbliche).
 
 1. Vai su: https://github.com/cybermerlo/40/settings/pages
 2. Sotto **"Source"**, seleziona:
-   - **Branch:** `main`
-   - **Folder:** `/ (root)`
+   - **Deploy from a branch** → **None** (prima disabilita se già configurato)
+   - Poi seleziona: **GitHub Actions** (questo abiliterà il deploy automatico dal workflow)
 3. Clicca **Save**
+
+**IMPORTANTE:** GitHub Pages deve essere configurato per usare **GitHub Actions**, non un branch diretto!
 
 ### Passo 3: Attiva il Workflow
 
