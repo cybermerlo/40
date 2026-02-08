@@ -13,12 +13,17 @@ import panorama from '../assets/images/Panorama_2.jpg';
 import panoramaSecret from '../assets/images/Panorama_3.png';
 import camminata from '../assets/images/Camminata_tra_le_due_baite_2.jpg';
 import mappaBaite from '../assets/images/Mappa_Baite.jpg';
+import baitaB6 from '../assets/images/Foto_Aggiuntiva_Baita_Bassa.jpeg';
+import sentieroNeve from '../assets/images/Foto_Sentiero_Neve.jpeg';
+import paesaggioInnevato from '../assets/images/Paesaggio_Innevato.jpeg';
 
 export const IMAGES = {
   panorama,
   panoramaSecret,
   camminata,
   mappaBaite,
+  sentieroNeve,
+  paesaggioInnevato,
 };
 
 export const BAITE = {
@@ -57,7 +62,7 @@ export const BAITE = {
     },
     indirizzo: "46°04'17.8\"N 11°19'19.4\"E",
     googleMapsUrl: 'https://maps.app.goo.gl/sjFk9KAtUw2fjJVn7?g_st=iw',
-    images: [baitaB1, baitaB2, baitaB3, baitaB4, baitaB5],
+    images: [baitaB1, baitaB2, baitaB3, baitaB4, baitaB5, baitaB6],
     mainImage: baitaB1,
     caratteristiche: [
       'Camera matrimoniale',

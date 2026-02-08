@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { MapPin, Navigation, Backpack, Phone, ExternalLink, AlertTriangle, Car } from 'lucide-react';
+import { MapPin, Navigation, Backpack, Phone, ExternalLink, AlertTriangle, Car, Video } from 'lucide-react';
 import { BAITE, INFO_VIAGGIO, IMAGES, PARCHEGGI } from '../data/baite';
 import { Card } from '../components/Common';
 
@@ -324,7 +324,14 @@ const Info = () => {
       </div>
 
       {/* ======== AVVISO NEVE CRITICO ======== */}
-      <Card className="mb-8 bg-red-50 border-2 border-red-300 ring-2 ring-red-100">
+      <Card className="mb-8 bg-red-50 border-2 border-red-300 ring-2 ring-red-100 overflow-hidden">
+        <Card.Body className="p-0">
+          <img
+            src={IMAGES.paesaggioInnevato}
+            alt="Paesaggio innevato nella zona delle baite"
+            className="w-full h-40 sm:h-56 object-cover"
+          />
+        </Card.Body>
         <Card.Body>
           <div className="flex gap-4">
             <div className="flex-shrink-0">
@@ -345,10 +352,19 @@ const Info = () => {
                 parcheggio praticabile più vicino. Consulta la sezione <strong>Parcheggi</strong> qui
                 sotto per capire dove lasciare l&apos;auto e coordinarti.
               </p>
-              <p className="text-red-700 text-sm">
+              <p className="text-red-700 text-sm mb-3">
                 Le catene da neve sono <strong>obbligatorie</strong>. Se non le hai, organizzati con
                 qualcuno che le ha o valuta di noleggiarle.
               </p>
+              <a
+                href={`${import.meta.env.BASE_URL}video_strade_neve.mp4`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm bg-red-100 text-red-800 border border-red-300 px-3 py-1.5 rounded-lg hover:bg-red-200 transition-colors"
+              >
+                <Video className="w-4 h-4" />
+                🎥 Guarda il video delle strade con la neve
+              </a>
             </div>
           </div>
         </Card.Body>
@@ -393,11 +409,18 @@ const Info = () => {
       {/* ======== PERCORSO PEDONALE TRA LE BAITE ======== */}
       <Card className="mb-8 overflow-hidden">
         <Card.Body className="p-0">
-          <img
-            src={IMAGES.camminata}
-            alt="Sentiero tra le due baite"
-            className="w-full h-56 sm:h-72 object-cover"
-          />
+          <div className="grid grid-cols-3">
+            <img
+              src={IMAGES.camminata}
+              alt="Sentiero tra le due baite in estate"
+              className="col-span-2 w-full h-56 sm:h-72 object-cover"
+            />
+            <img
+              src={IMAGES.sentieroNeve}
+              alt="Sentiero tra le baite con la neve"
+              className="col-span-1 w-full h-56 sm:h-72 object-cover"
+            />
+          </div>
         </Card.Body>
         <Card.Body>
           <h2 className="text-xl font-bold text-gray-800 mb-2">🥾 Percorso pedonale tra le baite</h2>
