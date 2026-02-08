@@ -91,7 +91,11 @@ export function buildSummaryHtml({ users, bookings, dayVisits, activities, sched
       const proposto = user ? getDisplayName(user) : '?';
       const likes = (a.likes || []).length;
       lines.push('<li><strong>' + escapeHtml(a.title) + '</strong>');
-      if (a.description) lines.push(' – ' + escapeHtml(a.description));
+      // escapeHtml prima, poi sostituire a capo: evita XSS e supporta \n, \r\n, \r
+      if (a.description != null && String(a.description).trim() !== '') {
+        const safe = escapeHtml(String(a.description)).replace(/\r\n?|\n/g, '<br />');
+        lines.push(' – ' + safe);
+      }
       lines.push(' (proposta da ' + escapeHtml(proposto) + ', ' + likes + ' like)</li>');
     });
     lines.push('</ul>');

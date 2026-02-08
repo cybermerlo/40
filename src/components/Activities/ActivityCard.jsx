@@ -56,9 +56,9 @@ const ActivityCard = ({ activity, onSchedule }) => {
         )}
       </div>
 
-      {/* Descrizione */}
-      {activity.description && (
-        <p className="text-gray-600 mb-4">{activity.description}</p>
+      {/* Descrizione (pre-wrap rispetta a capo e righe vuote; String() per dati legacy non-stringa) */}
+      {activity.description != null && activity.description !== '' && (
+        <p className="text-gray-600 mb-4 whitespace-pre-wrap">{String(activity.description)}</p>
       )}
 
       {/* Footer */}

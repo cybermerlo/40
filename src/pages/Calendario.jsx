@@ -287,9 +287,9 @@ const Calendario = () => {
                                   <p className="font-medium text-blue-800 text-sm">
                                     {sa.time} - {activity.title}
                                   </p>
-                                  {activity.description && (
-                                    <p className="text-xs text-blue-600 line-clamp-1">
-                                      {activity.description}
+                                  {activity.description != null && activity.description !== '' && (
+                                    <p className="text-xs text-blue-600 line-clamp-1 whitespace-pre-wrap">
+                                      {String(activity.description)}
                                     </p>
                                   )}
                                 </div>
@@ -538,9 +538,9 @@ const Calendario = () => {
               <h4 className="font-medium text-gray-800">
                 {selectedActivity.title}
               </h4>
-              {selectedActivity.description && (
-                <p className="text-sm text-gray-600 mt-1">
-                  {selectedActivity.description}
+              {selectedActivity.description != null && selectedActivity.description !== '' && (
+                <p className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">
+                  {String(selectedActivity.description)}
                 </p>
               )}
             </div>

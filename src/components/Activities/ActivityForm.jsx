@@ -17,7 +17,7 @@ const ActivityForm = ({ onSuccess }) => {
     try {
       await addActivity({
         title: title.trim(),
-        description: description.trim(),
+        description: typeof description === 'string' ? description.trim() : '',
       });
       setTitle('');
       setDescription('');

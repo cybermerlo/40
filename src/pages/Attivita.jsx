@@ -174,8 +174,8 @@ const Attivita = () => {
           <div className="space-y-4">
             <div className="bg-gray-50 rounded-lg p-4">
               <h4 className="font-medium text-gray-800">{selectedActivity.title}</h4>
-              {selectedActivity.description && (
-                <p className="text-sm text-gray-600 mt-1">{selectedActivity.description}</p>
+              {selectedActivity.description != null && selectedActivity.description !== '' && (
+                <p className="text-sm text-gray-600 mt-1 whitespace-pre-wrap">{String(selectedActivity.description)}</p>
               )}
             </div>
 
