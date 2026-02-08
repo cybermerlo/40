@@ -486,6 +486,7 @@ const Info = () => {
             {[
               '❄️ Vestiti caldi (strati)',
               '🥾 Scarponi da neve / doposci',
+              '🦵 Ghette',
               '🧤 Guanti e cappello',
               '🧣 Sciarpa / scaldacollo',
               '🕶️ Occhiali da sole',
@@ -496,6 +497,7 @@ const Info = () => {
               '🪥 Necessaire / prodotti personali',
               '💊 Preservativi e anticoncezionali',
               '📱 Caricatore telefono',
+              '🔦 Torce',
               '🛷 Slittino! (consigliatissimo con tutta questa neve)',
               '🎿 Attrezzatura sci (se hai)',
               '🎲 Giochi da tavolo',
