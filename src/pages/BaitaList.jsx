@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { BAITE, IMAGES } from '../data/baite';
 import { BaitaCard } from '../components/Baite';
 import { Card } from '../components/Common';
@@ -9,25 +10,12 @@ const BaitaList = () => {
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-gray-800 mb-2">Le Baite</h1>
         <p className="text-gray-600">
-          Due baite accoglienti a pochi passi l'una dall'altra
+          Due baite accoglienti a pochi passi l'una dall'altra.{' '}
+          <Link to="/info#distanza-baite" className="text-blue-600 hover:underline">
+            Scopri distanza e percorso tra le baite
+          </Link>
         </p>
       </div>
-
-      {/* Mappa */}
-      <Card className="mb-8">
-        <Card.Body className="p-0">
-          <img
-            src={IMAGES.mappaBaite}
-            alt="Mappa delle baite"
-            className="w-full h-auto rounded-xl"
-          />
-        </Card.Body>
-        <Card.Footer className="text-center">
-          <p className="text-sm text-gray-500">
-            Le due baite distano circa 700 metri l'una dall'altra (~10 minuti a piedi)
-          </p>
-        </Card.Footer>
-      </Card>
 
       {/* Baite */}
       <div className="grid md:grid-cols-2 gap-6 mb-8">

@@ -374,7 +374,7 @@ const Info = () => {
       <MappaInterattiva />
 
       {/* ======== DOVE SIAMO ======== */}
-      <Card className="mb-8">
+      <Card id="distanza-baite" className="mb-8">
         <Card.Body>
           <h2 className="text-xl font-bold text-gray-800 mb-2">📍 Dove siamo</h2>
           <p className="text-gray-600 mb-1">{INFO_VIAGGIO.distanzaTraBaite}</p>
