@@ -35,6 +35,7 @@ jobs:
         env:
           VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
           VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
+          VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
