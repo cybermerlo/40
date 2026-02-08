@@ -27,7 +27,7 @@ export const BAITE = {
     nome: 'Antica Patta',
     soprannome: 'La Baita Alta',
     descrizione: 'Baita tradizionale in posizione elevata con vista panoramica. Dispone di più stanze e spazi per dormire.',
-    postiTotali: 11,
+    postiTotali: 12,
     coordinate: {
       lat: 46.077874,
       lng: 11.321807,
@@ -40,7 +40,7 @@ export const BAITE = {
       'Camera matrimoniale',
       'Camera doppia con castello',
       'Disimpegno con tenda',
-      'Soggiorno con divano',
+      'Soggiorno con divano + spazio materasso',
       'Cucina attrezzata',
     ],
     colore: 'blue',
@@ -50,7 +50,7 @@ export const BAITE = {
     nome: 'Nuova Forza',
     soprannome: 'La Baita Bassa',
     descrizione: 'Baita accogliente e moderna, costruita sulla falsa riga di quella di Grauno. Più spazio per eventi in comune..',
-    postiTotali: 7,
+    postiTotali: 10,
     coordinate: {
       lat: 46.071622,
       lng: 11.322063,
@@ -61,8 +61,8 @@ export const BAITE = {
     mainImage: baitaB1,
     caratteristiche: [
       'Camera matrimoniale',
-      'Divano letto in soggiorno',
-      'Mansarda con materassi',
+      'Divano letto + materasso in soggiorno',
+      'Mansarda con 4 materassi',
       'Cucina attrezzata',
       'Atmosfera intima',
     ],
@@ -184,6 +184,18 @@ export const INFO_VIAGGIO = {
     {
       titolo: '🍕 Cibo e bevande',
       contenuto: 'Organizzeremo la spesa insieme. Porta i tuoi snack preferiti e qualcosa da condividere!',
+    },
+    {
+      titolo: '🛷 Slittino',
+      contenuto: 'Consigliatissimo portare lo slittino! Con tutta questa neve è il momento giusto per qualche discesa e per spostare roba comodamente.',
+    },
+    {
+      titolo: '🍖 Griglia',
+      contenuto: 'C\'è una griglia disponibile per fare grigliate. Organizziamoci per una (o più) grigliate di gruppo!',
+    },
+    {
+      titolo: '👨‍🍳 Collaborazione',
+      contenuto: 'Serve collaborazione e voglia di fare per riempire le giornate con attività e per gestire pranzi e cene. Rimboccatevi le maniche e cucinate insieme!',
     },
   ],
 };

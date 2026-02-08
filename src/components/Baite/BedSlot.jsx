@@ -15,6 +15,11 @@ const NIGHT_TO_PRESENCE = {
   '2026-02-21': [
     { date: '2026-02-21', period: 'sera' },
     { date: '2026-02-22', period: 'mattina' },
+    { date: '2026-02-22', period: 'pomeriggio' },
+  ],
+  '2026-02-22': [
+    { date: '2026-02-22', period: 'sera' },
+    { date: '2026-02-23', period: 'mattina' },
   ],
 };
 

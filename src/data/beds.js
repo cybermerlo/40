@@ -18,7 +18,7 @@ export const COMFORT_LEVELS = {
 };
 
 export const BEDS = {
-  // Baita A - Antica Patta (11 posti)
+  // Baita A - Antica Patta (12 posti)
   A1: {
     id: 'A1',
     baita: 'A',
@@ -32,22 +32,13 @@ export const BEDS = {
     id: 'A2',
     baita: 'A',
     stanza: 'Camera Matrimoniale',
-    tipo: 'Brandina Singola',
-    posti: 1,
-    comfort: 'ALLA_BUONA',
-    note: 'Aggiuntivo nella matrimoniale',
-  },
-  A3: {
-    id: 'A3',
-    baita: 'A',
-    stanza: 'Camera Matrimoniale',
     tipo: 'Matrimoniale Gonfiabile',
     posti: 2,
     comfort: 'ALLA_BUONA',
     note: 'Materasso gonfiabile aggiuntivo',
   },
-  A4: {
-    id: 'A4',
+  A3: {
+    id: 'A3',
     baita: 'A',
     stanza: 'Camera Doppia',
     tipo: 'Letto a Castello',
@@ -55,17 +46,17 @@ export const BEDS = {
     comfort: 'STANDARD',
     note: '1 sopra, 1 sotto',
   },
-  A5: {
-    id: 'A5',
+  A4: {
+    id: 'A4',
     baita: 'A',
     stanza: 'Camera Doppia',
-    tipo: 'Letto Singolo',
+    tipo: 'Brandina',
     posti: 1,
-    comfort: 'STANDARD',
+    comfort: 'ALLA_BUONA',
     note: 'Aggiuntivo nella doppia',
   },
-  A6: {
-    id: 'A6',
+  A5: {
+    id: 'A5',
     baita: 'A',
     stanza: 'Disimpegno (Tenda)',
     tipo: 'Materassi a terra',
@@ -73,8 +64,8 @@ export const BEDS = {
     comfort: 'ALLA_BUONA',
     note: 'Spazio separato da tenda, non completamente chiuso',
   },
-  A7: {
-    id: 'A7',
+  A6: {
+    id: 'A6',
     baita: 'A',
     stanza: 'Soggiorno',
     tipo: 'Divano',
@@ -82,8 +73,17 @@ export const BEDS = {
     comfort: 'ALLA_BUONA',
     note: 'Posto di fortuna',
   },
-  
-  // Baita B - Nuova Forza (7 posti)
+  A7: {
+    id: 'A7',
+    baita: 'A',
+    stanza: 'Soggiorno',
+    tipo: 'Materasso Matrimoniale',
+    posti: 2,
+    comfort: 'ALLA_BUONA',
+    note: 'Spazio davanti al divano – EMERGENZA: devi portare il materasso (non è disponibile in loco)',
+  },
+
+  // Baita B - Nuova Forza (10 posti)
   B1: {
     id: 'B1',
     baita: 'B',
@@ -107,9 +107,18 @@ export const BEDS = {
     baita: 'B',
     stanza: 'Mansarda/Disimpegno',
     tipo: 'Materassi',
-    posti: 3,
+    posti: 4,
     comfort: 'ALLA_BUONA',
     note: 'Con cuscini, stile "Grauno"',
+  },
+  B4: {
+    id: 'B4',
+    baita: 'B',
+    stanza: 'Soggiorno',
+    tipo: 'Materasso Matrimoniale',
+    posti: 2,
+    comfort: 'ALLA_BUONA',
+    note: 'Davanti al divano letto',
   },
 };
 
@@ -124,12 +133,14 @@ export const getTotalSpotsByBaita = (baitaId) => {
 export const NIGHTS = [
   { id: '2026-02-20', label: 'Venerdì 20', shortLabel: 'Ven 20' },
   { id: '2026-02-21', label: 'Sabato 21', shortLabel: 'Sab 21' },
+  { id: '2026-02-22', label: 'Domenica 22', shortLabel: 'Dom 22' },
 ];
 
 export const DAYS = [
   { id: '2026-02-20', label: 'Venerdì 20 Febbraio', shortLabel: 'Ven 20' },
   { id: '2026-02-21', label: 'Sabato 21 Febbraio (Compleanno!)', shortLabel: 'Sab 21 🎂' },
   { id: '2026-02-22', label: 'Domenica 22 Febbraio', shortLabel: 'Dom 22' },
+  { id: '2026-02-23', label: 'Lunedì 23 Febbraio (Si sbaracca!)', shortLabel: 'Lun 23 🧹' },
 ];
 
 export const DAY_PERIODS = [

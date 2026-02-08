@@ -139,7 +139,7 @@ const Calendario = () => {
           Programma e Attivita'
         </h1>
         <p className="text-gray-600">
-          Il calendario dei tre giorni, le attivita' in programma e la tua
+          Il calendario dei quattro giorni, le attivita' in programma e la tua
           presenza
         </p>
       </div>
@@ -191,7 +191,7 @@ const Calendario = () => {
       </Card>
 
       {/* ======= SEZIONE CALENDARIO ======= */}
-      <div className="grid md:grid-cols-3 gap-6 mb-12">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {DAYS.map((day, dayIndex) => {
           const dayActivities = activitiesByDay[day.id] || [];
           const visitors = getVisitorsForDay(day.id);
@@ -335,7 +335,7 @@ const Calendario = () => {
             Bacheca Attivita'
           </h2>
           <p className="text-gray-600">
-            Proponi cosa fare durante i tre giorni insieme! L'admin piazzera' le
+            Proponi cosa fare durante i quattro giorni insieme! L'admin piazzera' le
             proposte nel calendario.
           </p>
         </div>

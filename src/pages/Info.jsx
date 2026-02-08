@@ -473,6 +473,7 @@ const Info = () => {
               '🪥 Necessaire / prodotti personali',
               '💊 Preservativi e anticoncezionali',
               '📱 Caricatore telefono',
+              '🛷 Slittino! (consigliatissimo con tutta questa neve)',
               '🎿 Attrezzatura sci (se hai)',
               '🎲 Giochi da tavolo',
               '🍫 Snack da condividere',

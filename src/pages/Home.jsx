@@ -105,10 +105,10 @@ const Home = () => {
               Weekend del cazzo in Montagna
             </h1>
             <p className="text-lg md:text-2xl text-white/90 mb-2 drop-shadow">
-              20 - 21 - 22 Febbraio 2026
+              20 - 21 - 22 - 23 Febbraio 2026
             </p>
             <p className="text-base md:text-lg text-white/80 mb-6 drop-shadow max-w-3xl mx-auto">
-              A Trento. Tre giorni insieme tra neve, amicizia ed orgette (stavolta sicure). Vieni quando vuoi, dormi dove vuoi (ho preso due baite vicine tra loro dove potete stare), è tutto offerto. Cagatevi Addosso.
+              A Trento. Quattro giorni insieme tra neve, amicizia ed orgette (stavolta sicure). Vieni quando vuoi, dormi dove vuoi (ho preso due baite vicine tra loro dove potete stare), è tutto offerto. Cagatevi Addosso.
             </p>
             {!currentUser ? (
               <Link to="/login">
@@ -157,10 +157,10 @@ const Home = () => {
               <PartyPopper className="w-8 h-8" />
             </div>
             <p className="text-xl md:text-2xl font-semibold mb-2">
-              20 - 21 - 22 Febbraio 2026
+              20 - 21 - 22 - 23 Febbraio 2026
             </p>
             <p className="text-lg text-white/90">
-              Un intero weekend per festeggiare questo numero tondo (e decisamente impegnativo) 
+              Un intero weekend lungo per festeggiare questo numero tondo (e decisamente impegnativo) 
               tra legno, neve e aria buona. Chi vuole beve, chi vuole gioca, chi vuole passeggia, chi vuole fa smartworking,
               chi vuole va a sciare, chi vuole scopa.
             </p>
@@ -217,7 +217,7 @@ const Home = () => {
                   <h4 className="font-semibold text-gray-800">🚗 Vieni quando vuoi</h4>
                 </div>
                 <p className="text-sm text-gray-600">
-                  Non riesci a reggere tre giorni? Segnala se verrai solo per una giornata, 
+                  Non riesci a reggere quattro giorni? Segnala se verrai solo per una giornata, 
                   un pomeriggio, ecc.. 
                   È fondamentale per capire quanto vino e quanta carne caricare!
                 </p>
@@ -267,7 +267,7 @@ const Home = () => {
         <Card className="mt-6 bg-gradient-to-br from-gray-50 to-blue-50">
           <Card.Body className="text-center py-6">
             <p className="text-lg text-gray-700 leading-relaxed">
-              Abbiamo a disposizione <strong>tre giorni e due baite</strong> immerse nella neve 
+              Abbiamo a disposizione <strong>quattro giorni e due baite</strong> immerse nella neve 
               tutte per noi, a pochi passi l'una dall'altra: 
               <strong> Baita Alta "Antica Patta"</strong> e 
               <strong> Baita Bassa "Nuova Forza"</strong>. 
@@ -297,7 +297,7 @@ const Home = () => {
           <Card className="text-center">
             <Card.Body>
               <Calendar className="w-8 h-8 mx-auto mb-2 text-amber-500" />
-              <p className="text-3xl font-bold text-gray-800">3</p>
+              <p className="text-3xl font-bold text-gray-800">4</p>
               <p className="text-sm text-gray-500">Giorni</p>
             </Card.Body>
           </Card>
@@ -379,8 +379,8 @@ const Home = () => {
 
       {/* Date */}
       <section className="max-w-7xl mx-auto px-4 pb-12">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">I tre giorni</h2>
-        <div className="grid md:grid-cols-3 gap-4">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">I quattro giorni</h2>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {DAYS.map((day, index) => (
             <Card key={day.id} className={index === 1 ? 'ring-2 ring-amber-400' : ''}>
               <Card.Body className="text-center">
@@ -393,7 +393,8 @@ const Home = () => {
                 <p className="text-sm text-gray-500">
                   {index === 0 && 'Arrivo e sistemazione'}
                   {index === 1 && 'Festa e attività'}
-                  {index === 2 && 'Ultime attività e partenza'}
+                  {index === 2 && 'Relax e attività'}
+                  {index === 3 && 'Sbaracchiamo e si parte'}
                 </p>
               </Card.Body>
             </Card>
