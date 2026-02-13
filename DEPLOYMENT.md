@@ -1,6 +1,6 @@
 # Istruzioni per il Deployment su GitHub Pages
 
-## ⚠️ IMPORTANTE - Sicurezza Token -
+##x ⚠️ IMPORTANTE - Sicurezza Token --
 
 Il token GitHub viene esposto nel frontend (variabili `VITE_*` sono pubbliche). 
 **Dopo aver configurato i secrets, RIGENERA il token** per invalidare quello condiviso.
