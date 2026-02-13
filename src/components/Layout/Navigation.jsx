@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Building2, Calendar, Info, User } from 'lucide-react';
+import { Home, Building2, Calendar, Car, Info, User } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { cn } from '../../utils/helpers';
 
@@ -7,6 +7,7 @@ const navItems = [
   { to: '/', label: 'Home', icon: Home },
   { to: '/baite', label: 'Baite', icon: Building2 },
   { to: '/calendario', label: 'Programma', icon: Calendar },
+  { to: '/auto', label: 'Auto', icon: Car },
   { to: '/info', label: 'Info', icon: Info },
 ];
 

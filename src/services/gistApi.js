@@ -131,6 +131,15 @@ export const deleteUser = async (userId) => {
     ...a,
     likes: (a.likes || []).filter((id) => id !== userId),
   }));
+  // Rimuovi i passaggi offerti dall'utente
+  if (db.rides) {
+    db.rides = db.rides.filter((r) => r.driverId !== userId);
+    // Rimuovi l'utente dai passeggeri dei passaggi rimasti
+    db.rides = db.rides.map((r) => ({
+      ...r,
+      passengers: (r.passengers || []).filter((id) => id !== userId),
+    }));
+  }
   await writeDatabase(db);
 };
 
@@ -317,4 +326,70 @@ export const deleteScheduledActivity = async (scheduledId) => {
   const db = await readDatabase();
   db.scheduledActivities = db.scheduledActivities.filter((s) => s.id !== scheduledId);
   await writeDatabase(db);
+};
+
+// === RIDES (PASSAGGI) ===
+
+export const getRides = async () => {
+  const db = await readDatabase();
+  return db.rides || [];
+};
+
+export const addRide = async (rideData) => {
+  const db = await readDatabase();
+  if (!db.rides) db.rides = [];
+  const newRide = {
+    id: generateId(),
+    ...rideData,
+    passengers: [],
+    createdAt: new Date().toISOString(),
+  };
+  db.rides.push(newRide);
+  await writeDatabase(db);
+  return newRide;
+};
+
+export const updateRide = async (rideId, rideData) => {
+  const db = await readDatabase();
+  if (!db.rides) db.rides = [];
+  const index = db.rides.findIndex((r) => r.id === rideId);
+  if (index !== -1) {
+    db.rides[index] = { ...db.rides[index], ...rideData };
+    await writeDatabase(db);
+    return db.rides[index];
+  }
+  return null;
+};
+
+export const deleteRide = async (rideId) => {
+  const db = await readDatabase();
+  if (!db.rides) return;
+  db.rides = db.rides.filter((r) => r.id !== rideId);
+  await writeDatabase(db);
+};
+
+export const joinRide = async (rideId, userId) => {
+  const db = await readDatabase();
+  if (!db.rides) db.rides = [];
+  const ride = db.rides.find((r) => r.id === rideId);
+  if (!ride) throw new Error('Passaggio non trovato.');
+  if (ride.passengers.includes(userId)) {
+    throw new Error('Sei già iscritto a questo passaggio.');
+  }
+  if (ride.passengers.length >= ride.totalSeats) {
+    throw new Error('Nessun posto disponibile.');
+  }
+  ride.passengers.push(userId);
+  await writeDatabase(db);
+  return ride;
+};
+
+export const leaveRide = async (rideId, userId) => {
+  const db = await readDatabase();
+  if (!db.rides) db.rides = [];
+  const ride = db.rides.find((r) => r.id === rideId);
+  if (!ride) throw new Error('Passaggio non trovato.');
+  ride.passengers = ride.passengers.filter((id) => id !== userId);
+  await writeDatabase(db);
+  return ride;
 };
