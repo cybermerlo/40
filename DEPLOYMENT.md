@@ -1,9 +1,8 @@
 # Istruzioni per il Deployment su GitHub Pages
 
-##x ⚠️ IMPORTANTE - Sicurezza Token --
+## Sicurezza Token
 
-Il token GitHub viene esposto nel frontend (variabili `VITE_*` sono pubbliche). 
-**Dopo aver configurato i secrets, RIGENERA il token** per invalidare quello condiviso.
+Il token GitHub **NON** viene più incluso nel codice compilato. L'admin lo inserisce al login e viene salvato in `sessionStorage` (cancellato alla chiusura del browser).
 
 ## Configurazione Secrets su GitHub
 
@@ -17,9 +16,8 @@ Il token GitHub viene esposto nel frontend (variabili `VITE_*` sono pubbliche).
 - **Name:** `VITE_GIST_ID`
 - **Value:** `70fb9b38686a85b429ed60fef11b017c` (ID del Gist dalla URL)
 
-#### Secret 2: `VITE_GITHUB_TOKEN`
-- **Name:** `VITE_GITHUB_TOKEN`
-- **Value:** [Inserisci qui il tuo token GitHub - inizia con `ghp_`]
+> **Nota:** `VITE_GITHUB_TOKEN` non è più necessario come secret del repository.
+> L'admin inserisce il token al login direttamente nel browser.
 
 ### Passo 2: Abilita GitHub Pages
 
@@ -45,10 +43,9 @@ Crea un file `.env` nella root del progetto con:
 
 ```env
 VITE_GIST_ID=70fb9b38686a85b429ed60fef11b017c
-VITE_GITHUB_TOKEN=ghp_il_tuo_token_qui
 ```
 
-**⚠️ NON committare il file `.env`** (è già nel `.gitignore`)
+> Il token GitHub non serve più nel `.env`. L'admin lo inserisce al login nel browser.
 
 ## URL del Progetto
 
@@ -57,7 +54,7 @@ Dopo il deploy, il progetto sarà disponibile su:
 
 ## Note sulla Sicurezza
 
-- Il token GitHub è esposto nel codice frontend
-- Chiunque può vedere il token aprendo gli strumenti sviluppatore del browser
-- **Raccomandazione:** Rigenera il token dopo la configurazione e limita i permessi solo ai Gist necessari
-- Considera di creare un token con permessi limitati solo al Gist specifico
+- Il token GitHub **non** è più nel codice compilato
+- L'admin lo inserisce al login e viene salvato in `sessionStorage` (si cancella alla chiusura del browser)
+- Gli utenti normali possono leggere i dati senza token (il Gist è pubblico)
+- Solo l'admin necessita del token per salvare modifiche

@@ -1,10 +1,22 @@
 // Servizio per gestire il database su GitHub Gist
 
 const GIST_ID = import.meta.env.VITE_GIST_ID;
-const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 const GIST_FILENAME = 'database.json';
 
 const GIST_API_URL = `https://api.github.com/gists/${GIST_ID}`;
+
+// Token gestito a runtime (sessionStorage) - mai nel codice compilato
+export const setGithubToken = (token) => {
+  sessionStorage.setItem('gh_token', token);
+};
+
+export const getGithubToken = () => {
+  return sessionStorage.getItem('gh_token');
+};
+
+export const clearGithubToken = () => {
+  sessionStorage.removeItem('gh_token');
+};
 
 // Struttura iniziale del database
 const INITIAL_DATABASE = {
@@ -25,18 +37,29 @@ const INITIAL_DATABASE = {
   scheduledActivities: [],
 };
 
-// Headers per le richieste API
-const getHeaders = () => ({
-  Authorization: `Bearer ${GITHUB_TOKEN}`,
-  'Content-Type': 'application/json',
+// Headers per lettura (pubblico, senza auth)
+const getReadHeaders = () => ({
   Accept: 'application/vnd.github.v3+json',
 });
+
+// Headers per scrittura (con token da sessionStorage)
+const getWriteHeaders = () => {
+  const token = getGithubToken();
+  if (!token) {
+    throw new Error('Token GitHub non configurato. Effettua il login come admin.');
+  }
+  return {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json',
+    Accept: 'application/vnd.github.v3+json',
+  };
+};
 
 // Legge il database dal Gist
 export const readDatabase = async () => {
   try {
     const response = await fetch(GIST_API_URL, {
-      headers: getHeaders(),
+      headers: getReadHeaders(),
     });
 
     if (!response.ok) {
@@ -65,7 +88,7 @@ export const writeDatabase = async (data) => {
   try {
     const response = await fetch(GIST_API_URL, {
       method: 'PATCH',
-      headers: getHeaders(),
+      headers: getWriteHeaders(),
       body: JSON.stringify({
         files: {
           [GIST_FILENAME]: {

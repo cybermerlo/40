@@ -4,6 +4,7 @@ import { UserPlus, Users, ArrowRight } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { Button, Card, Avatar } from '../Common';
 import { getDisplayName } from '../../utils/helpers';
+import { setGithubToken } from '../../services/gistApi';
 import AvatarPicker from './AvatarPicker';
 
 // Chiave admin (offuscata)
@@ -16,7 +17,9 @@ const Login = () => {
   const [mode, setMode] = useState('select'); // 'select' | 'register'
   const [selectedUser, setSelectedUser] = useState(null);
   const [adminPassword, setAdminPassword] = useState('');
+  const [adminToken, setAdminToken] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const [tokenError, setTokenError] = useState(false);
   const [formData, setFormData] = useState({
     nome: '',
     cognome: '',
@@ -28,17 +31,25 @@ const Login = () => {
   const handleSelectUser = (user) => {
     setSelectedUser(user);
     setAdminPassword('');
+    setAdminToken('');
     setPasswordError(false);
+    setTokenError(false);
   };
 
   const handleLogin = () => {
     if (!selectedUser) return;
-    // Se è l'admin, richiedi password
+    // Se è l'admin, richiedi password e token
     if (selectedUser.isAdmin) {
       if (adminPassword !== _k) {
         setPasswordError(true);
         return;
       }
+      if (!adminToken.trim()) {
+        setTokenError(true);
+        return;
+      }
+      // Salva il token in sessionStorage per le operazioni di scrittura
+      setGithubToken(adminToken.trim());
     }
     login(selectedUser);
     navigate('/');
@@ -160,6 +171,28 @@ const Login = () => {
                 {passwordError && (
                   <p className="text-sm text-red-600 mt-1">Password errata</p>
                 )}
+              </div>
+              <div className="mt-3">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Token GitHub
+                </label>
+                <input
+                  type="password"
+                  value={adminToken}
+                  onChange={(e) => {
+                    setAdminToken(e.target.value);
+                    setTokenError(false);
+                  }}
+                  onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    tokenError ? 'border-red-400 bg-red-50' : 'border-gray-300'
+                  }`}
+                  placeholder="ghp_..."
+                />
+                {tokenError && (
+                  <p className="text-sm text-red-600 mt-1">Token richiesto per le operazioni admin</p>
+                )}
+                <p className="text-xs text-gray-500 mt-1">Necessario per salvare le modifiche</p>
               </div>
             </Card.Body>
           )}

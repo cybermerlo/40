@@ -35,7 +35,6 @@ jobs:
         run: npm run build -- --base=/40/pr-preview/pr-${{ github.event.number }}/
         env:
           VITE_GIST_ID: ${{ secrets.VITE_GIST_ID }}
-          VITE_GITHUB_TOKEN: ${{ secrets.VITE_GITHUB_TOKEN }}
           VITE_GOOGLE_MAPS_API_KEY: ${{ secrets.VITE_GOOGLE_MAPS_API_KEY }}
 
       - name: Deploy PR Preview
