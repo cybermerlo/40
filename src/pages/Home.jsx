@@ -102,7 +102,7 @@ const Home = () => {
               <PartyPopper className="w-8 h-8" />
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-3 drop-shadow-lg">
-              Weekend del cazzo in Montagna
+              Weekend della Ceppa in Montagna
             </h1>
             <p className="text-lg md:text-2xl text-white/90 mb-2 drop-shadow">
               20 - 21 - 22 - 23 Febbraio 2026
