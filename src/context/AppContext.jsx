@@ -24,7 +24,8 @@ export const AppProvider = ({ children }) => {
   const [dayVisits, setDayVisits] = useState([]);
   const [activities, setActivities] = useState([]);
   const [scheduledActivities, setScheduledActivities] = useState([]);
-  
+  const [carRides, setCarRides] = useState([]);
+
   // Stato UI
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -40,6 +41,7 @@ export const AppProvider = ({ children }) => {
       setDayVisits(db.dayVisits || []);
       setActivities(db.activities || []);
       setScheduledActivities(db.scheduledActivities || []);
+      setCarRides(db.carRides || []);
     } catch (err) {
       setError('Errore nel caricamento dei dati');
       console.error(err);
@@ -93,6 +95,16 @@ export const AppProvider = ({ children }) => {
     );
     setScheduledActivities((prev) =>
       prev.filter((sa) => !userActivityIds.includes(sa.activityId))
+    );
+    // Rimuovi passaggi auto dell'utente e rimuovilo dalle liste passeggeri
+    setCarRides((prev) =>
+      prev
+        .filter((r) => r.userId !== userId)
+        .map((r) => ({
+          ...r,
+          passengersOutbound: (r.passengersOutbound || []).filter((id) => id !== userId),
+          passengersReturn: (r.passengersReturn || []).filter((id) => id !== userId),
+        }))
     );
   };
 
@@ -247,6 +259,41 @@ export const AppProvider = ({ children }) => {
     setScheduledActivities((prev) => prev.filter((s) => s.id !== scheduledId));
   };
 
+  // === FUNZIONI AUTO ===
+
+  const addCarRide = async (rideData) => {
+    if (!currentUser) throw new Error("Devi effettuare l'accesso.");
+    const newRide = await gistApi.addCarRide({
+      ...rideData,
+      userId: currentUser.id,
+    });
+    setCarRides((prev) => [...prev, newRide]);
+    return newRide;
+  };
+
+  const deleteCarRide = async (rideId) => {
+    await gistApi.deleteCarRide(rideId);
+    setCarRides((prev) => prev.filter((r) => r.id !== rideId));
+  };
+
+  const joinCarRide = async (rideId, direction) => {
+    if (!currentUser) throw new Error("Devi effettuare l'accesso.");
+    const updated = await gistApi.joinCarRide(rideId, currentUser.id, direction);
+    if (updated) {
+      setCarRides((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
+    }
+    return updated;
+  };
+
+  const leaveCarRide = async (rideId, direction) => {
+    if (!currentUser) throw new Error("Devi effettuare l'accesso.");
+    const updated = await gistApi.leaveCarRide(rideId, currentUser.id, direction);
+    if (updated) {
+      setCarRides((prev) => prev.map((r) => (r.id === updated.id ? updated : r)));
+    }
+    return updated;
+  };
+
   // === HELPER ===
 
   const getUserById = (userId) => {
@@ -263,6 +310,7 @@ export const AppProvider = ({ children }) => {
     dayVisits,
     activities,
     scheduledActivities,
+    carRides,
     loading,
     error,
     isAdmin,
@@ -299,6 +347,12 @@ export const AppProvider = ({ children }) => {
     scheduleActivity,
     updateScheduledActivity,
     deleteScheduledActivity,
+
+    // Funzioni auto
+    addCarRide,
+    deleteCarRide,
+    joinCarRide,
+    leaveCarRide,
 
     // Utilità
     loadData,

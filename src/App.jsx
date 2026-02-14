@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AppProvider } from './context/AppContext';
 import { Layout } from './components/Layout';
 import { Login } from './components/Auth';
-import { Home, BaitaList, BaitaDetail, Calendario, Info, Profilo } from './pages';
+import { Home, BaitaList, BaitaDetail, Calendario, Auto, Info, Profilo } from './pages';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -25,6 +25,7 @@ function App() {
             <Route path="baite" element={<BaitaList />} />
             <Route path="baite/:id" element={<BaitaDetail />} />
             <Route path="calendario" element={<Calendario />} />
+            <Route path="auto" element={<Auto />} />
             <Route path="info" element={<Info />} />
             <Route path="profilo" element={<Profilo />} />
           </Route>
