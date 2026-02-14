@@ -80,7 +80,7 @@ const CarRideForm = () => {
     <div className="flex items-center gap-3">
       <button
         type="button"
-        onClick={() => onChange(Math.max(1, value - 1))}
+        onClick={() => onChange(Math.max(0, value - 1))}
         className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 flex items-center justify-center transition-colors"
       >
         <Minus className="w-4 h-4" />

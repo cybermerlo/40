@@ -19,6 +19,8 @@ const Auto = () => {
   // Statistiche
   const totalSeatsOut = carRides.reduce((sum, r) => sum + (r.seatsOutbound || 0), 0);
   const totalPassengersOut = carRides.reduce((sum, r) => sum + (r.passengersOutbound || []).length, 0);
+  const totalSeatsRet = carRides.reduce((sum, r) => sum + (r.seatsReturn || 0), 0);
+  const totalPassengersRet = carRides.reduce((sum, r) => sum + (r.passengersReturn || []).length, 0);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -29,14 +31,18 @@ const Auto = () => {
           Organizza i passaggi per andare e tornare dalla montagna!
         </p>
         {hasAnyRides && (
-          <div className="flex items-center justify-center gap-4 mt-3">
+          <div className="flex items-center justify-center gap-3 mt-3 flex-wrap">
             <span className="inline-flex items-center gap-1.5 text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
               <Car className="w-4 h-4" />
               {carRides.length} {carRides.length === 1 ? 'auto' : 'auto'}
             </span>
-            <span className="inline-flex items-center gap-1.5 text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">
+            <span className="inline-flex items-center gap-1.5 text-sm text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full">
               <Users className="w-4 h-4" />
-              {totalPassengersOut}/{totalSeatsOut} posti andata occupati
+              Andata: {totalPassengersOut}/{totalSeatsOut}
+            </span>
+            <span className="inline-flex items-center gap-1.5 text-sm text-blue-700 bg-blue-50 px-3 py-1 rounded-full">
+              <Users className="w-4 h-4" />
+              Ritorno: {totalPassengersRet}/{totalSeatsRet}
             </span>
           </div>
         )}
