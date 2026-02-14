@@ -7,7 +7,7 @@ const navItems = [
   { to: '/', label: 'Home', icon: Home },
   { to: '/baite', label: 'Baite', icon: Building2 },
   { to: '/calendario', label: 'Programma', icon: Calendar },
-  { to: '/auto', label: 'Auto', icon: Car },
+  { to: '/auto', label: 'Passaggi Auto', icon: Car },
   { to: '/info', label: 'Info', icon: Info },
 ];
 
