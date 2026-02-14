@@ -23,6 +23,7 @@ const INITIAL_DATABASE = {
   dayVisits: [],
   activities: [],
   scheduledActivities: [],
+  carRides: [],
 };
 
 // Headers per le richieste API
@@ -131,6 +132,15 @@ export const deleteUser = async (userId) => {
     ...a,
     likes: (a.likes || []).filter((id) => id !== userId),
   }));
+  // Rimuovi i passaggi auto dell'utente e rimuovilo dalle liste passeggeri
+  if (db.carRides) {
+    db.carRides = db.carRides.filter((r) => r.userId !== userId);
+    db.carRides = db.carRides.map((r) => ({
+      ...r,
+      passengersOutbound: (r.passengersOutbound || []).filter((id) => id !== userId),
+      passengersReturn: (r.passengersReturn || []).filter((id) => id !== userId),
+    }));
+  }
   await writeDatabase(db);
 };
 
@@ -317,4 +327,79 @@ export const deleteScheduledActivity = async (scheduledId) => {
   const db = await readDatabase();
   db.scheduledActivities = db.scheduledActivities.filter((s) => s.id !== scheduledId);
   await writeDatabase(db);
+};
+
+// === CAR RIDES ===
+
+export const getCarRides = async () => {
+  const db = await readDatabase();
+  return db.carRides || [];
+};
+
+export const addCarRide = async (rideData) => {
+  const db = await readDatabase();
+  if (!db.carRides) db.carRides = [];
+  const newRide = {
+    id: generateId(),
+    ...rideData,
+    passengersOutbound: [],
+    passengersReturn: [],
+    createdAt: new Date().toISOString(),
+  };
+  db.carRides.push(newRide);
+  await writeDatabase(db);
+  return newRide;
+};
+
+export const updateCarRide = async (rideId, rideData) => {
+  const db = await readDatabase();
+  if (!db.carRides) db.carRides = [];
+  const index = db.carRides.findIndex((r) => r.id === rideId);
+  if (index !== -1) {
+    db.carRides[index] = { ...db.carRides[index], ...rideData };
+    await writeDatabase(db);
+    return db.carRides[index];
+  }
+  return null;
+};
+
+export const deleteCarRide = async (rideId) => {
+  const db = await readDatabase();
+  if (!db.carRides) return;
+  db.carRides = db.carRides.filter((r) => r.id !== rideId);
+  await writeDatabase(db);
+};
+
+export const joinCarRide = async (rideId, userId, direction) => {
+  const db = await readDatabase();
+  if (!db.carRides) db.carRides = [];
+  const ride = db.carRides.find((r) => r.id === rideId);
+  if (!ride) return null;
+
+  const field = direction === 'outbound' ? 'passengersOutbound' : 'passengersReturn';
+  const seatsField = direction === 'outbound' ? 'seatsOutbound' : 'seatsReturn';
+
+  if (!ride[field]) ride[field] = [];
+  if (ride[field].includes(userId)) {
+    throw new Error('Sei già iscritto a questo passaggio.');
+  }
+  if (ride[field].length >= ride[seatsField]) {
+    throw new Error('Nessun posto disponibile.');
+  }
+  ride[field].push(userId);
+  await writeDatabase(db);
+  return ride;
+};
+
+export const leaveCarRide = async (rideId, userId, direction) => {
+  const db = await readDatabase();
+  if (!db.carRides) db.carRides = [];
+  const ride = db.carRides.find((r) => r.id === rideId);
+  if (!ride) return null;
+
+  const field = direction === 'outbound' ? 'passengersOutbound' : 'passengersReturn';
+  if (!ride[field]) ride[field] = [];
+  ride[field] = ride[field].filter((id) => id !== userId);
+  await writeDatabase(db);
+  return ride;
 };
