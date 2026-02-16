@@ -83,7 +83,7 @@ export const BEDS = {
     note: 'Spazio davanti al divano – EMERGENZA: devi portare il materasso (non è disponibile in loco)',
   },
 
-  // Baita B - Nuova Forza (10 posti)
+  // Baita B - Nuova Forza (12 posti)
   B1: {
     id: 'B1',
     baita: 'B',
@@ -107,9 +107,9 @@ export const BEDS = {
     baita: 'B',
     stanza: 'Mansarda/Disimpegno',
     tipo: 'Materassi',
-    posti: 4,
+    posti: 6,
     comfort: 'ALLA_BUONA',
-    note: 'Con cuscini, stile "Grauno"',
+    note: '3 materassi matrimoniali (come si vede dalla foto), stile "Grauno"',
   },
   B4: {
     id: 'B4',

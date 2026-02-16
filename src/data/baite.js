@@ -55,7 +55,7 @@ export const BAITE = {
     nome: 'Nuova Forza',
     soprannome: 'La Baita Bassa',
     descrizione: 'Baita accogliente e moderna, costruita sulla falsa riga di quella di Grauno. Più spazio per eventi in comune..',
-    postiTotali: 10,
+    postiTotali: 12,
     coordinate: {
       lat: 46.071622,
       lng: 11.322063,
@@ -67,7 +67,7 @@ export const BAITE = {
     caratteristiche: [
       'Camera matrimoniale',
       'Divano letto + materasso in soggiorno',
-      'Mansarda con 4 materassi',
+      'Mansarda con 3 materassi matrimoniali (6 posti)',
       'Cucina attrezzata',
       'Atmosfera intima',
     ],
@@ -134,6 +134,20 @@ export const PARCHEGGI = [
   },
   {
     id: 5,
+    nome: 'Parcheggio Emm Spitz',
+    posti: 'Limitati',
+    coordinate: { lat: 46.084249, lng: 11.316534 },
+    indirizzo: "46°05'03.3\"N 11°18'59.5\"E",
+    googleMapsUrl: 'https://maps.app.goo.gl/Vh7nTVLr18QCY1bP6',
+    servizio: 'Baita Alta',
+    nevePercentuale: 10,
+    sempreRaggiungibile: false,
+    distanze: { baitaBassa: 12, baitaAlta: 4 },
+    navettaJeep: true,
+    note: 'Parcheggio del ristorante Emm Spitz. Ha senso principalmente per raggiungere la Baita Alta. A piedi: ~28 min per la Baita Alta.',
+  },
+  {
+    id: 6,
     nome: 'Parcheggio Kamauz',
     posti: '10+',
     coordinate: { lat: 46.075056, lng: 11.303111 },
@@ -147,7 +161,7 @@ export const PARCHEGGI = [
     note: 'Punto di incontro principale in caso di forte neve. Sempre accessibile.',
   },
   {
-    id: 6,
+    id: 7,
     nome: 'Parcheggio Pergine',
     posti: '50+',
     coordinate: { lat: 46.065333, lng: 11.250333 },
@@ -168,7 +182,7 @@ export const INFO_VIAGGIO = {
   consigli: [
     {
       titolo: '🚗 Come arrivare',
-      contenuto: 'Le baite si raggiungono in auto, ma con 60 cm di neve l\'accesso è molto difficile. Consulta la sezione Parcheggi per sapere dove lasciare l\'auto. Manuel viene a prenderti con la Jeep!',
+      contenuto: 'Le baite si raggiungono in auto, ma con 60 cm di neve l\'accesso è molto difficile. Consulta la sezione Parcheggi per sapere dove lasciare l\'auto. Manuel viene a prenderti con la Jeep! In rari casi con troppa neve la Jeep potrebbe non riuscire a passare: in quel caso cercheremo una soluzione alternativa. Si raccomanda caldamente di arrivare prima delle 20:00.',
     },
     {
       titolo: '❄️ Neve e catene',
@@ -179,16 +193,20 @@ export const INFO_VIAGGIO = {
       contenuto: 'Vestiti caldi, doposci, sacco a pelo se hai un posto "alla buona", ciabatte, asciugamani, necessaire.',
     },
     {
-      titolo: '🥾 Abbigliamento',
-      contenuto: 'Scarponi da neve o doposci sono essenziali per muoversi tra le baite. Porta strati caldi!',
+      titolo: '🥾 Abbigliamento e calzature',
+      contenuto: 'Sono obbligatorie ciaspole, ghette o scarponi impermeabili per muoversi nella neve. Scarponi da neve o doposci sono essenziali per muoversi tra le baite. Porta strati caldi!',
     },
     {
       titolo: '📱 Connessione',
       contenuto: 'La copertura telefonica potrebbe essere limitata. WiFi disponibile nelle baite.',
     },
     {
+      titolo: '🚨 Coordinamento arrivi',
+      contenuto: 'Non tentate di raggiungere direttamente le baite senza l\'ok degli organizzatori. Contattateci prima per coordinare l\'arrivo in sicurezza!',
+    },
+    {
       titolo: '🍕 Cibo e bevande',
-      contenuto: 'Organizzeremo la spesa insieme. Porta i tuoi snack preferiti e qualcosa da condividere!',
+      contenuto: 'Nelle baite ci sarà qualcosa per fare colazione e qualche pastasciutta. Nel programma saranno indicate le attività che si cerca di fare in comune. Se vuoi cose particolari, ci sono supermercati a circa 20 minuti di tragitto per cui possiamo organizzare la spesa.',
     },
     {
       titolo: '🛷 Slittino',
