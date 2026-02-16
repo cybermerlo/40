@@ -163,7 +163,7 @@ const MappaInterattiva = () => {
           🗺️ Mappa Interattiva
         </h2>
         <p className="text-sm text-gray-500 mt-1">
-          Tocca i marcatori per i dettagli. Blu/verde = baite, P1–P6 = parcheggi.
+          Tocca i marcatori per i dettagli. Blu/verde = baite, P1–P7 = parcheggi.
         </p>
       </Card.Header>
       <div className="relative">
@@ -352,9 +352,21 @@ const Info = () => {
                 parcheggio praticabile più vicino. Consulta la sezione <strong>Parcheggi</strong> qui
                 sotto per capire dove lasciare l&apos;auto e coordinarti.
               </p>
-              <p className="text-red-700 text-sm mb-3">
+              <p className="text-red-700 text-sm mb-2">
                 Le catene da neve sono <strong>obbligatorie</strong>. Se non le hai, organizzati con
                 qualcuno che le ha o valuta di noleggiarle.
+              </p>
+              <p className="text-red-700 text-sm mb-2">
+                In rari casi, con troppa neve, la Jeep potrebbe <strong>non riuscire a passare</strong>.
+                In tal caso cercheremo di trovare una soluzione alternativa per raggiungervi!
+              </p>
+              <p className="text-red-700 text-sm mb-2">
+                <strong>Si raccomanda caldamente di arrivare prima delle 20:00</strong> per facilitare
+                la logistica dei trasferimenti con la Jeep.
+              </p>
+              <p className="text-red-700 text-sm mb-3">
+                <strong>Non tentate di raggiungere direttamente le baite senza l&apos;ok degli organizzatori.</strong>{' '}
+                Contattateci prima per coordinare l&apos;arrivo.
               </p>
               <a
                 href={`${import.meta.env.BASE_URL}video_strade_neve.mp4`}
@@ -485,8 +497,9 @@ const Info = () => {
           <div className="grid sm:grid-cols-2 gap-x-8 gap-y-2">
             {[
               '❄️ Vestiti caldi (strati)',
-              '🥾 Scarponi da neve / doposci',
-              '🦵 Ghette',
+              '🥾 Scarponi impermeabili / doposci (OBBLIGATORI)',
+              '🏔️ Ciaspole (OBBLIGATORIE se si cammina nella neve)',
+              '🦵 Ghette (OBBLIGATORIE in alternativa)',
               '🧤 Guanti e cappello',
               '🧣 Sciarpa / scaldacollo',
               '🕶️ Occhiali da sole',
