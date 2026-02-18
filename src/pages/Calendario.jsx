@@ -239,16 +239,11 @@ const Calendario = () => {
                       Chi viene ({visitors.length})
                     </p>
                     <div className="flex flex-wrap gap-1">
-                      {visitors.slice(0, 8).map((user) => (
+                      {visitors.map((user) => (
                         <div key={user.id} className="flex items-center gap-1" title={getDisplayName(user)}>
                           <Avatar user={user} size="xs" />
                         </div>
                       ))}
-                      {visitors.length > 8 && (
-                        <span className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium">
-                          +{visitors.length - 8}
-                        </span>
-                      )}
                     </div>
                   </div>
                 )}
