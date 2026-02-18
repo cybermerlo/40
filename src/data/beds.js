@@ -41,10 +41,10 @@ export const BEDS = {
     id: 'A3',
     baita: 'A',
     stanza: 'Camera Doppia',
-    tipo: 'Letto a Castello - Completi di tutto (Cusc., Lenz., Cop.) nella cassettiera',
+    tipo: 'Letto a Castello',
     posti: 2,
     comfort: 'STANDARD',
-    note: '1 sopra, 1 sotto',
+    note: '1 sopra, 1 sotto - Completi di tutto (Cusc., Lenz., Cop.) nella cassettiera',
   },
   A4: {
     id: 'A4',
