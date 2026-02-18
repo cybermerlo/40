@@ -26,7 +26,7 @@ export const BEDS = {
     tipo: 'Letto Matrimoniale',
     posti: 2,
     comfort: 'STANDARD',
-    note: 'Letto principale della camera',
+    note: 'Letto principale della camera - Completi di tutto (Cusc., Lenz., Cop.)',
   },
   A2: {
     id: 'A2',
@@ -41,7 +41,7 @@ export const BEDS = {
     id: 'A3',
     baita: 'A',
     stanza: 'Camera Doppia',
-    tipo: 'Letto a Castello',
+    tipo: 'Letto a Castello - Completi di tutto (Cusc., Lenz., Cop.) nella cassettiera',
     posti: 2,
     comfort: 'STANDARD',
     note: '1 sopra, 1 sotto',
@@ -62,7 +62,7 @@ export const BEDS = {
     tipo: 'Materassi a terra',
     posti: 2,
     comfort: 'ALLA_BUONA',
-    note: 'Spazio separato da tenda, non completamente chiuso',
+    note: 'Spazio separato da tenda, non completamente chiuso - Ci sono Coperte e cuscina, manca lenzuolo federe e copri mat',
   },
   A6: {
     id: 'A6',
@@ -71,7 +71,7 @@ export const BEDS = {
     tipo: 'Divano',
     posti: 1,
     comfort: 'ALLA_BUONA',
-    note: 'Posto di fortuna',
+    note: 'Ci sono cuscini e coperte, mancano copri materass. lenzuolo e federe.',
   },
   A7: {
     id: 'A7',
@@ -91,7 +91,7 @@ export const BEDS = {
     tipo: 'Letto Matrimoniale',
     posti: 2,
     comfort: 'STANDARD',
-    note: 'Letto principale',
+    note: 'Letto principale - Completo di tutto',
   },
   B2: {
     id: 'B2',
@@ -109,7 +109,7 @@ export const BEDS = {
     tipo: 'Materassi',
     posti: 6,
     comfort: 'ALLA_BUONA',
-    note: '3 materassi matrimoniali (come si vede dalla foto), stile "Grauno"',
+    note: '3 materassi matrimoniali (come si vede dalla foto), stile "Grauno" - Ci sono copri materasso e coperta, mancano federe e lenzuoli. Utile sacco a pelo.',
   },
   B4: {
     id: 'B4',
