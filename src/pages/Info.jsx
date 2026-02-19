@@ -313,6 +313,13 @@ const ParcheggioCard = ({ p }) => {
 // Pagina Info principale
 // ============================================
 const Info = () => {
+  const [webcamTs, setWebcamTs] = useState(Date.now());
+
+  useEffect(() => {
+    const interval = setInterval(() => setWebcamTs(Date.now()), 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       {/* Header */}
@@ -322,6 +329,30 @@ const Info = () => {
           Tutto quello che devi sapere per arrivare e goderti il weekend
         </p>
       </div>
+
+      {/* ======== WEBCAM NEVE ======== */}
+      <Card className="mb-8">
+        <Card.Body>
+          <div className="flex items-center justify-between mb-3">
+            <div>
+              <h2 className="text-xl font-bold text-gray-800">📷 Webcam – Stato della neve</h2>
+              <p className="text-sm text-gray-500">Situazione attuale vicino alla Baita • si aggiorna ogni pochi minuti</p>
+            </div>
+            <button
+              onClick={() => setWebcamTs(Date.now())}
+              className="flex-shrink-0 flex items-center gap-1.5 text-sm text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              🔄 Aggiorna
+            </button>
+          </div>
+          <img
+            src={`https://vit.trilogis.it/cam/cam133.jpg?t=${webcamTs}`}
+            alt="Webcam neve vicino alla Baita"
+            className="w-full rounded-lg"
+            style={{ aspectRatio: '639/473', objectFit: 'cover' }}
+          />
+        </Card.Body>
+      </Card>
 
       {/* ======== AVVISO NEVE CRITICO ======== */}
       <Card className="mb-8 bg-red-50 border-2 border-red-300 ring-2 ring-red-100 overflow-hidden">
