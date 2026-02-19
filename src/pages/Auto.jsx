@@ -78,7 +78,7 @@ const Auto = () => {
             <Card.Body className="text-sm text-gray-600 space-y-2">
               <p className="flex items-start gap-2">
                 <Car className="w-5 h-5 text-blue-500 flex-shrink-0 mt-0.5" />
-                Offri un passaggio indicando quando parti e quanti posti hai liberi. Gli altri potranno unirsi!
+                Dicci quando arrivi o offri un passaggio indicando quando parti e quanti posti hai liberi. Gli altri potranno unirsi!
               </p>
               <p className="text-xs text-gray-400">
                 La destinazione e' la montagna. Indica opzionalmente da dove parti per facilitare il ritrovo.

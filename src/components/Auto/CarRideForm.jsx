@@ -100,7 +100,7 @@ const CarRideForm = () => {
     <Card>
       <Card.Header className="flex items-center gap-2">
         <Car className="w-5 h-5 text-blue-500" />
-        <h3 className="font-semibold">Offri un passaggio</h3>
+        <h3 className="font-semibold">Dicci quando arrivi e/o offri un passaggio</h3>
       </Card.Header>
       <form onSubmit={handleSubmit}>
         <Card.Body className="space-y-5">
