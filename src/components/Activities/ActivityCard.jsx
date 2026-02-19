@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Heart, Trash2, Calendar, User } from 'lucide-react';
+import { Heart, Trash2, Calendar, CalendarClock } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { Avatar, Button } from '../Common';
 import { formatDate } from '../../utils/helpers';
 
-const ActivityCard = ({ activity, onSchedule }) => {
+const ActivityCard = ({ activity, onSchedule, schedule, onEditSchedule }) => {
   const { currentUser, users, toggleActivityLike, deleteActivity, isAdmin } = useApp();
   const [loading, setLoading] = useState(false);
 
@@ -88,8 +88,18 @@ const ActivityCard = ({ activity, onSchedule }) => {
           )}
         </div>
 
-        {/* Admin: aggiungi al calendario */}
-        {isAdmin && onSchedule && (
+        {/* Admin: modifica data/orario se già in calendario, altrimenti programma */}
+        {isAdmin && schedule && onEditSchedule && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onEditSchedule(activity, schedule)}
+          >
+            <CalendarClock className="w-4 h-4 mr-1" />
+            Modifica data/orario
+          </Button>
+        )}
+        {isAdmin && !schedule && onSchedule && (
           <Button
             variant="outline"
             size="sm"

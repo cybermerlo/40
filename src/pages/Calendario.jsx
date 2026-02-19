@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import {
   Calendar,
+  CalendarClock,
   Clock,
   Sunrise,
   Sun,
@@ -35,6 +36,7 @@ const Calendario = () => {
     deleteDayVisit,
     getDayVisitsForDate,
     scheduleActivity,
+    updateScheduledActivity,
     isAdmin,
   } = useApp();
 
@@ -44,6 +46,7 @@ const Calendario = () => {
   // --- Stato per la sezione attività ---
   const [showScheduleModal, setShowScheduleModal] = useState(false);
   const [selectedActivity, setSelectedActivity] = useState(null);
+  const [editingSchedule, setEditingSchedule] = useState(null); // se impostato = modal in modifica data/orario
   const [scheduleForm, setScheduleForm] = useState({
     date: DAYS[1].id,
     time: '10:00',
@@ -113,19 +116,40 @@ const Calendario = () => {
 
   const handleSchedule = (activity) => {
     setSelectedActivity(activity);
+    setEditingSchedule(null);
+    setScheduleForm({ date: DAYS[1].id, time: '10:00' });
     setShowScheduleModal(true);
+  };
+
+  const handleEditSchedule = (activity, schedule) => {
+    setSelectedActivity(activity);
+    setEditingSchedule(schedule);
+    setScheduleForm({ date: schedule.date, time: schedule.time });
+    setShowScheduleModal(true);
+  };
+
+  const handleCloseScheduleModal = () => {
+    setShowScheduleModal(false);
+    setSelectedActivity(null);
+    setEditingSchedule(null);
   };
 
   const handleConfirmSchedule = async () => {
     if (!selectedActivity) return;
     setScheduleLoading(true);
     try {
-      await scheduleActivity(selectedActivity.id, {
-        date: scheduleForm.date,
-        time: scheduleForm.time,
-      });
-      setShowScheduleModal(false);
-      setSelectedActivity(null);
+      if (editingSchedule) {
+        await updateScheduledActivity(editingSchedule.id, {
+          date: scheduleForm.date,
+          time: scheduleForm.time,
+        });
+      } else {
+        await scheduleActivity(selectedActivity.id, {
+          date: scheduleForm.date,
+          time: scheduleForm.time,
+        });
+      }
+      handleCloseScheduleModal();
     } finally {
       setScheduleLoading(false);
     }
@@ -277,15 +301,27 @@ const Calendario = () => {
                               return (
                                 <div
                                   key={sa.id}
-                                  className="bg-blue-50 rounded-lg p-2"
+                                  className={`bg-blue-50 rounded-lg p-2 ${isAdmin ? 'flex items-start justify-between gap-2' : ''}`}
                                 >
-                                  <p className="font-medium text-blue-800 text-sm">
-                                    {sa.time} - {activity.title}
-                                  </p>
-                                  {activity.description != null && activity.description !== '' && (
-                                    <p className="text-xs text-blue-600 line-clamp-1 whitespace-pre-wrap">
-                                      {String(activity.description)}
+                                  <div className="min-w-0 flex-1">
+                                    <p className="font-medium text-blue-800 text-sm">
+                                      {sa.time} - {activity.title}
                                     </p>
+                                    {activity.description != null && activity.description !== '' && (
+                                      <p className="text-xs text-blue-600 line-clamp-1 whitespace-pre-wrap">
+                                        {String(activity.description)}
+                                      </p>
+                                    )}
+                                  </div>
+                                  {isAdmin && (
+                                    <button
+                                      type="button"
+                                      onClick={() => handleEditSchedule(activity, sa)}
+                                      className="flex-shrink-0 p-1 rounded text-blue-600 hover:bg-blue-100 transition-colors"
+                                      title="Modifica data e orario"
+                                    >
+                                      <CalendarClock className="w-4 h-4" />
+                                    </button>
                                   )}
                                 </div>
                               );
@@ -429,7 +465,11 @@ const Calendario = () => {
                           <div className="absolute -left-4 top-4 bg-emerald-500 text-white text-xs px-2 py-1 rounded-r-full">
                             {day?.shortLabel} {schedule?.time}
                           </div>
-                          <ActivityCard activity={activity} />
+                          <ActivityCard
+                            activity={activity}
+                            schedule={schedule}
+                            onEditSchedule={isAdmin ? handleEditSchedule : undefined}
+                          />
                         </div>
                       );
                     })}
@@ -521,11 +561,11 @@ const Calendario = () => {
         </div>
       </Modal>
 
-      {/* Modal per schedulare attività (solo admin) */}
+      {/* Modal per schedulare o modificare data/orario attività (solo admin) */}
       <Modal
         isOpen={showScheduleModal}
-        onClose={() => setShowScheduleModal(false)}
-        title="Programma attivita'"
+        onClose={handleCloseScheduleModal}
+        title={editingSchedule ? "Modifica data e orario" : "Programma attivita'"}
       >
         {selectedActivity && (
           <div className="space-y-4">
@@ -580,7 +620,7 @@ const Calendario = () => {
             <div className="flex gap-3 pt-4">
               <Button
                 variant="secondary"
-                onClick={() => setShowScheduleModal(false)}
+                onClick={handleCloseScheduleModal}
                 className="flex-1"
               >
                 Annulla
@@ -590,7 +630,7 @@ const Calendario = () => {
                 loading={scheduleLoading}
                 className="flex-1"
               >
-                Conferma
+                {editingSchedule ? 'Salva modifiche' : 'Conferma'}
               </Button>
             </div>
           </div>
