@@ -47,9 +47,9 @@ const Auto = () => {
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Header */}
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Passaggi Auto</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-2">Arrivi, partenze e passaggi Auto</h1>
         <p className="text-gray-600">
-          Organizza i passaggi per andare e tornare dalla montagna!
+          Dichiara quando arrivi e/o organizza i passaggi per andare e tornare dalla montagna!
         </p>
         {hasAnyRides && (
           <div className="flex items-center justify-center gap-3 mt-3 flex-wrap">
