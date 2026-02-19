@@ -78,17 +78,12 @@ const ActivityCard = ({ activity, onSchedule }) => {
             <span className="font-medium">{likeCount}</span>
           </button>
 
-          {/* Avatar dei like */}
+          {/* Avatar dei like - tutti visibili */}
           {likedUsers.length > 0 && (
-            <div className="flex -space-x-1">
-              {likedUsers.slice(0, 3).map((user) => (
+            <div className="flex -space-x-1 flex-wrap">
+              {likedUsers.map((user) => (
                 <Avatar key={user.id} user={user} size="xs" className="ring-2 ring-white" />
               ))}
-              {likedUsers.length > 3 && (
-                <div className="w-6 h-6 rounded-full bg-gray-200 flex items-center justify-center text-xs font-medium ring-2 ring-white">
-                  +{likedUsers.length - 3}
-                </div>
-              )}
             </div>
           )}
         </div>
