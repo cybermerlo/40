@@ -19,7 +19,7 @@ const Header = () => {
               <Mountain className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="font-bold text-gray-800 leading-tight">Weekend in Montagna del cazzo</h1>
+              <h1 className="font-bold text-gray-800 leading-tight">Weekend in Montagna Biricchino</h1>
               <p className="text-xs text-gray-500">20-21-22-23 Febbraio 2026 🎂</p>
             </div>
           </Link>
