@@ -35,7 +35,7 @@ export const BEDS = {
     tipo: 'Matrimoniale Gonfiabile',
     posti: 2,
     comfort: 'ALLA_BUONA',
-    note: 'Materasso gonfiabile aggiuntivo',
+    note: 'Materasso gonfiabile aggiuntivo – Consigliato portare prudenzialmente lenzuola o sacco a pelo.',
   },
   A3: {
     id: 'A3',
@@ -53,7 +53,7 @@ export const BEDS = {
     tipo: 'Brandina',
     posti: 1,
     comfort: 'ALLA_BUONA',
-    note: 'Aggiuntivo nella doppia',
+    note: 'Aggiuntivo nella doppia – Consigliato portare prudenzialmente lenzuola o sacco a pelo.',
   },
   A5: {
     id: 'A5',
@@ -80,7 +80,7 @@ export const BEDS = {
     tipo: 'Materasso Matrimoniale',
     posti: 2,
     comfort: 'ALLA_BUONA',
-    note: 'Spazio davanti al divano – EMERGENZA: devi portare il materasso (non è disponibile in loco)',
+    note: 'Spazio davanti al divano – EMERGENZA: devi portare il materasso (non è disponibile in loco). Consigliato portare prudenzialmente lenzuola o sacco a pelo.',
   },
 
   // Baita B - Nuova Forza (12 posti)
@@ -100,7 +100,7 @@ export const BEDS = {
     tipo: 'Divano Letto',
     posti: 2,
     comfort: 'STANDARD',
-    note: 'In zona comune',
+    note: 'In zona comune – Consigliato portare prudenzialmente lenzuola o sacco a pelo.',
   },
   B3: {
     id: 'B3',
@@ -118,7 +118,7 @@ export const BEDS = {
     tipo: 'Materasso Matrimoniale',
     posti: 2,
     comfort: 'ALLA_BUONA',
-    note: 'Davanti al divano letto',
+    note: 'Davanti al divano letto – Consigliato portare prudenzialmente lenzuola o sacco a pelo.',
   },
 };
 

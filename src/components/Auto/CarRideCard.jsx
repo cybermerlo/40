@@ -3,7 +3,7 @@ import { Trash2, MapPin, Clock, Users, MessageSquare } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 import { Avatar, Button } from '../Common';
 import { DAYS } from '../../data/beds';
-import { formatDate, getDisplayName } from '../../utils/helpers';
+import { formatDate, getDisplayName, addTwoHours } from '../../utils/helpers';
 
 const DirectionSection = ({ label, color, date, time, timeEnd, seats, passengers, users, currentUser, isDriver, rideId, direction, onJoin, onLeave, loading }) => {
   const day = DAYS.find((d) => d.id === date);
@@ -43,6 +43,12 @@ const DirectionSection = ({ label, color, date, time, timeEnd, seats, passengers
             {timeEnd && <span className="text-gray-400"> ~ {timeEnd}</span>}
           </span>
         </div>
+        {time && (
+          <div className="text-xs text-gray-400">
+            Arrivo stimato: ~{addTwoHours(time)}
+            {timeEnd && <span> – ~{addTwoHours(timeEnd)}</span>}
+          </div>
+        )}
 
         {/* Posti */}
         <div>

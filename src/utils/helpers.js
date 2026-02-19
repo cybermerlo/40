@@ -60,6 +60,17 @@ export const cn = (...classes) => {
   return classes.filter(Boolean).join(' ');
 };
 
+// Aggiunge 2 ore a un orario in formato "HH:MM"
+export const addTwoHours = (time) => {
+  if (!time) return null;
+  const [h, m] = time.split(':').map(Number);
+  if (isNaN(h) || isNaN(m)) return null;
+  const totalMin = h * 60 + m + 120;
+  const newH = Math.floor(totalMin / 60) % 24;
+  const newM = totalMin % 60;
+  return `${String(newH).padStart(2, '0')}:${String(newM).padStart(2, '0')}`;
+};
+
 // Scroll to top
 export const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
