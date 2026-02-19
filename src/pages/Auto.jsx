@@ -1,11 +1,12 @@
-import { Car, Users } from 'lucide-react';
+import { Car, Users, MapPin } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { CarRideCard, CarRideForm } from '../components/Auto';
-import { Card } from '../components/Common';
+import { Avatar, Card } from '../components/Common';
 import { DAYS } from '../data/beds';
+import { addTwoHours, getDisplayName } from '../utils/helpers';
 
 const Auto = () => {
-  const { carRides } = useApp();
+  const { carRides, users } = useApp();
 
   // Raggruppa ride per data di partenza, ordinate per orario
   const getRidesForDay = (dayId) => {
@@ -15,6 +16,26 @@ const Auto = () => {
   };
 
   const hasAnyRides = carRides.length > 0;
+
+  // Prossimi arrivi alla baita (andata, orario stimato = partenza + 2h)
+  const getUpcomingArrivals = () => {
+    const now = new Date();
+    return carRides
+      .filter((r) => r.departureTime && r.departureDate)
+      .map((r) => {
+        const arrivalTime = addTwoHours(r.departureTime);
+        const arrivalTimeEnd = r.departureTimeEnd ? addTwoHours(r.departureTimeEnd) : null;
+        const arrivalDatetime = new Date(`${r.departureDate}T${arrivalTime}:00`);
+        const driver = users.find((u) => u.id === r.userId);
+        const day = DAYS.find((d) => d.id === r.departureDate);
+        return { ride: r, arrivalDatetime, driver, arrivalTime, arrivalTimeEnd, day };
+      })
+      .filter((a) => !isNaN(a.arrivalDatetime) && a.arrivalDatetime > now)
+      .sort((a, b) => a.arrivalDatetime - b.arrivalDatetime)
+      .slice(0, 2);
+  };
+
+  const upcomingArrivals = getUpcomingArrivals();
 
   // Statistiche
   const totalSeatsOut = carRides.reduce((sum, r) => sum + (r.seatsOutbound || 0), 0);
@@ -68,6 +89,34 @@ const Auto = () => {
 
         {/* Colonna destra: Lista passaggi */}
         <div className="lg:col-span-2">
+          {/* Banner prossimi arrivi */}
+          {upcomingArrivals.length > 0 && (
+            <div className="mb-4 bg-amber-50 border border-amber-200 rounded-xl px-4 py-3">
+              <p className="text-xs font-semibold text-amber-700 uppercase tracking-wide mb-2 flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5" />
+                Prossimi arrivi alle baite
+              </p>
+              <div className="space-y-2">
+                {upcomingArrivals.map(({ ride, driver, arrivalTime, arrivalTimeEnd, day }) => (
+                  <div key={ride.id} className="flex items-center gap-2">
+                    <Avatar user={driver} size="xs" />
+                    <span className="text-sm font-medium text-gray-800">
+                      {getDisplayName(driver) || 'Anonimo'}
+                    </span>
+                    <span className="text-xs text-gray-400">·</span>
+                    <span className="text-sm text-amber-800">
+                      ~{arrivalTime}
+                      {arrivalTimeEnd && <span className="text-amber-600"> – ~{arrivalTimeEnd}</span>}
+                    </span>
+                    {day && (
+                      <span className="text-xs text-gray-400">({day.shortLabel})</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
           <h2 className="text-xl font-bold text-gray-800 mb-4">
             Passaggi disponibili ({carRides.length})
           </h2>
