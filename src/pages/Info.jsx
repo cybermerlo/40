@@ -336,7 +336,7 @@ const Info = () => {
           <div className="flex items-center justify-between mb-3">
             <div>
               <h2 className="text-xl font-bold text-gray-800">📷 Webcam – Stato della neve</h2>
-              <p className="text-sm text-gray-500">Situazione attuale vicino alla Baita • si aggiorna ogni pochi minuti</p>
+              <p className="text-sm text-gray-500">Situazione attuale a 4 km dalla Baita. In Baita la strada peggiora • si aggiorna ogni pochi minuti</p>
             </div>
             <button
               onClick={() => setWebcamTs(Date.now())}
