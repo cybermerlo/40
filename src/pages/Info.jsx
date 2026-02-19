@@ -349,7 +349,6 @@ const Info = () => {
             src={`https://vit.trilogis.it/cam/cam133.jpg?t=${webcamTs}`}
             alt="Webcam neve vicino alla Baita"
             className="w-full rounded-lg"
-            style={{ aspectRatio: '639/473', objectFit: 'cover' }}
           />
         </Card.Body>
       </Card>
