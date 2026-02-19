@@ -49,15 +49,21 @@ export const readDatabase = async () => {
 
     if (!file || !file.content) {
       // Se il file non esiste, inizializza il database
+      console.warn('ATTENZIONE: File database.json non trovato nel Gist. Inizializzazione automatica.');
       await writeDatabase(INITIAL_DATABASE);
       return INITIAL_DATABASE;
     }
 
-    return JSON.parse(file.content);
+    const parsed = JSON.parse(file.content);
+    if (!parsed.users || !Array.isArray(parsed.users)) {
+      throw new Error('Struttura del database non valida: campo "users" mancante o non è un array');
+    }
+    return parsed;
   } catch (error) {
     console.error('Errore lettura Gist:', error);
-    // In caso di errore, ritorna il database iniziale
-    return INITIAL_DATABASE;
+    // Propaga l'errore: NON ritornare INITIAL_DATABASE, altrimenti i caller
+    // potrebbero sovrascrivere il gist con dati vuoti cancellando tutto.
+    throw error;
   }
 };
 
